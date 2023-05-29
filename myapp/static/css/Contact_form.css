@@ -1,0 +1,64 @@
+*{
+    color:yellow;
+    font-weight: bold;
+    font-family:'Luxurious Roman';
+}
+body{
+    background: url("bgimg2.jfif");
+    background-size:100%;
+    background-repeat: no-repeat;
+}
+.heading{
+    font-weight: bold;
+    color: red;
+    position: absolute;
+    right: 220px;
+    padding: 5px;
+    margin: 2px;
+    font-size: 50px;
+}
+.content{
+    max-width: 650px;
+    width: 90%;
+    margin: 2px;
+    font-size: 20px;
+    position: absolute;
+    top: 85px;
+    right: 40px;
+}
+
+input[type="email"],
+input[type="number"],
+input[type="submit"],
+input[type="text"],
+textarea{
+    font-weight: normal;
+    color: black;
+    padding: 10px;
+    margin: 1px;
+    border: 3px solid aqua;
+    border-radius: 5px;
+    width: 60%;
+}
+input[type="text"]{
+    width: 30%;
+}
+input[type="submit"]{
+    font-weight: bold;
+    font-size: 20px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color:crimson;
+    cursor: pointer;
+    width: 30%;
+}
+input[type="submit"]:hover{
+    background-color: black;
+    color: crimson;
+}
+fieldset{
+    background-color:grey;
+    border: 2px solid black;
+}

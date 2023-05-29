@@ -1,0 +1,48 @@
+{% extends 'NavigationBar.html' %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Password</title>
+  </head>
+  <body>
+    <br />
+    <fieldset style="margin-right: 800px;background-color: whitesmoke">
+      <legend>Change Password</legend>
+      <form method="post">
+        {% csrf_token %}
+        <p>
+          Enter Old Password:
+          <input
+            type="text"
+            name="oldpass"
+            id="oldpass"
+            required
+            placeholder="Enter Old Password"
+          />
+        </p>
+        <p>
+          Enter New Password:
+          <input
+            type="text"
+            name="newpass"
+            id="newpass"
+            required
+            placeholder="Enter New Password"
+          />
+        </p>
+        <button type="submit">Change Password</button>
+      </form>
+      {% if message %}
+      <script>
+        alert("You need to login in order to change password.")
+      </script>
+      {% endif %}
+    </fieldset>
+  </body>
+</html>
+
+{% endblock %}
