@@ -7,7 +7,7 @@
     <title>Enter OTP</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="{% url 'Otp' %}" method="post">
         {% csrf_token %}
         <p>Enter OTP: <input type="text" name="otp" id="" required></p>
         <button type="submit">Submit</button>
