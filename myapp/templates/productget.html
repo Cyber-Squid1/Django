@@ -24,7 +24,7 @@
                 <tr><td>Description: {{SingleProductdata.productdescription}}</td></tr>
             </tr>
         </table>
-        <form action="" method="post">
+        <form action="{% url 'BuyProduct' %}" method="post">
             <button type="submit">Buy Now</button>
         </form>
     </div>

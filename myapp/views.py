@@ -147,44 +147,6 @@ def ChangePassword(request):
         return render(request,'ChangePass.html',{"isLoggedIn":1})
     return render(request,'ChangePass.html',{"isLoggedIn":1})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def BuyNow(request):
     if 'email' in request.session:
         loggedinuser=User.objects.get(email=request.session['email'])
@@ -261,89 +223,24 @@ def paymenthandler(request):
             del request.session['address']
             del request.session['orderAmount']
             del request.session['paymentMethod']
-            return redirect('orderSuccessView')
+            return redirect('SuccessOrder')
         except:
             return HttpResponseBadRequest()
     else:
         return HttpResponseBadRequest()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def OrderSuccess(request):
+    if 'email' in request.session:
+        a=request.session['email']
+        return render(request,'order_sucess.html',{'a':a})
+    else:
+        return HttpResponseBadRequest()
 
 def searchProduct(request):
     word=request.GET.get('search')
     wordset=word.split(" ")
     for i in wordset:
         searchData=Products.objects.filter(Q(Category_categoryname_icontains=1)|Q(productname_icontains=i)|Q(price_icontains=i)).distinct()
-        
         return render(request,'product_table.html',{"searchData":searchData})
 
 
