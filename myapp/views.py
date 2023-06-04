@@ -265,7 +265,7 @@ def ForgotPassword(request):
                 [useremail],
                 fail_silently=False,
                 )
-                request.session['OtpEmail']=useremail
+                request.session['otpemail']=useremail
                 print(1)
                 return render(request,'otp.html',{'message':'OTP Sent To Your Email'})
             else:
@@ -279,20 +279,27 @@ def ForgotPassword(request):
 
 
 def VerifyOTP(request):
-    if request.method=="POST":
-        userotp=request.POST['otp']
-        print("Verify otp: ",request.session['OtpEmail'])
-        if userotp == request.session['otp']:
-            return render(request,'otpchangepassword.html')
+    if 'otp' in request.session:
+        if request.method=="POST":
+            userotp=request.POST['otp']
+            print("Verify otp: ",request.session['otpemail'])
+            if userotp == request.session['otp']:
+                return render(request,'otpchangepassword.html',{"PasswordChanged":0})
+    else:
+        return render(request,'Forgotpassword.html',{'message':'OTP expired.Please generate a new OTP.'})
 
 def ChangePassowrdUsingOTP(request):
-    if request.method=="POST":
-        newPassword=request.POST['newpass']
-        print(request.session['OtpEmail'])
-        try:
-            User.objects.get(email=request.session['OtpEmail']).update(password=newPassword)
-            del request.session['otp']
-            del request.session['OtpEmail']
-            return render(request,'Login.html',{"message":"Password Changed successfully. You will be redirected to the Login Page."})
-        except:
-            return render(request,'Login.html',{"message":"Password change Unsuccessful"})
+    if 'otp' in request.session:
+        if request.method=="POST":
+            newPassword=request.POST['newpassword']
+            print(request.session['otpemail'])
+            try:
+                User.objects.filter(email=request.session['otpemail']).update(password=newPassword)
+                del request.session['otp']
+                del request.session['otpemail']
+                return render(request,'otpchangepassword.html',{"PasswordChanged":1})
+            except:
+                return render(request,'otpchangepassword.html',{"PasswordChanged":0})
+        return render(request,'otpchangepassword.html',{"PasswordChanged":0})
+    else:
+        return render(request,'Forgotpassword.html',{"message":"OTP expired.Please generate a new OTP."})
