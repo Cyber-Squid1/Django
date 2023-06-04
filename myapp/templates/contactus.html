@@ -88,7 +88,7 @@
     <!--<script src="contact_form.js"></script> this code is for node.js -->
     <p class="heading">Feedback Form</p>
     <div class="content">
-      <form method="post">
+      <form method="post" action="{% url 'ContactUs' %}">
         {% csrf_token %}
         <fieldset>
           <p class="fname">
@@ -99,6 +99,7 @@
               id="fname"
               placeholder="First Name"
               required
+              value="{{userData.name}}"
             />
             <input
               type="text"
@@ -116,6 +117,7 @@
               id="mob"
               required
               placeholder="XXXXXXXXXX"
+              value="{{userData.phone}}"
             />
           </p>
           <p>
@@ -126,6 +128,7 @@
               id="mail"
               required
               placeholder="xyz@abc.com"
+              value="{{userData.email}}"
             />
           </p>
           <p>

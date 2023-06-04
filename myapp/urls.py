@@ -9,8 +9,12 @@ urlpatterns = [
     path('contactus/',Contactus,name='ContactUs'),
     path('profile/',Profile,name='Profile'),
     path('changepass/',ChangePassword,name='ChangePass'),
-    path('editprofile/',EditProfile,name='ProfileEdit'),
+    path('editprofile/',EditProfile,name='EditProfile'),
     path('product_all/',product_all),
     path('product_filter/<int:id>/',CategoryWiseProduct,name="productfilter"),
-    path('product_get/<int:id>/',SingleProduct,name="productget")
+    path('product_get/<int:id>/',SingleProduct,name="productget"),
+    path('search/',searchProduct,name="SearchProducts"),
+    path('forgotpassword/',ForgotPassword,name="Forgotpassword"),
+    path('otp/',VerifyOTP,name="Otp"),
+    path('changepasswordotp/',ChangePassowrdUsingOTP,name="passwordchangeotp"),
 ]

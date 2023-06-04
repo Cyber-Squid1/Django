@@ -1,47 +1,59 @@
-{% extends 'NavigationBar.html' %} {% block content %}
-
+{% extends 'NavigationBar.html' %} {% block content %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Change Password</title>
+    <title>Profile</title>
+    <style>
+      input {
+        background-color: white;
+      }
+    </style>
   </head>
   <body>
     <br />
-    <fieldset style="margin-right: 800px;background-color: whitesmoke">
-      <legend>Change Password</legend>
-      <form method="post">
+    <br />
+    <div
+      style="
+        width: 400px;
+        border: 2px solid black;
+        padding: 10px;
+        background-color: grey;
+      "
+    >
+      <img
+        src="../static/manProfile.jpg"
+        alt=""
+        width="100px"
+        height="100px"
+        style="border: 2px solid black"
+      />
+      <form action="{% url 'EditProfile' %}" method="post">
         {% csrf_token %}
         <p>
-          Enter Old Password:
-          <input
-            type="text"
-            name="oldpass"
-            id="oldpass"
-            required
-            placeholder="Enter Old Password"
-          />
+          Name:
+          <input type="text" name="name" id="" value="{{userdata.name}}" />
         </p>
         <p>
-          Enter New Password:
+          Phone Number:
+          <input type="number" name="phone" id="" value="{{userdata.phone}}" />
+        </p>
+        <p>
+          Email:
           <input
-            type="text"
-            name="newpass"
-            id="newpass"
-            required
-            placeholder="Enter New Password"
+            type="email"
+            name=""
+            id=""
+            disabled
+            value="{{userdata.email}}"
           />
         </p>
-        <button type="submit">Change Password</button>
+        <button type="submit">Save Changes</button>
       </form>
-      {% if message %}
-      <script>
-        alert("You need to login in order to change password.")
-      </script>
-      {% endif %}
-    </fieldset>
+    </div>
+    <br />
   </body>
 </html>
 

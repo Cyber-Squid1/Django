@@ -77,8 +77,12 @@ WSGI_APPLICATION = "demo.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "mydb.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "django_ecommerce",
+        "HOST":'localhost',
+        "USER":'root',
+        "PASSWORD":'',
+        "POSR":3306
     }
 }
 
@@ -126,3 +130,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'ompatel22072002@gmail.com'  # TODO: Your email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'udgtuwssiikkyheq'  # TODO: Give APP Password here
+EMAIL_USE_TLS = True

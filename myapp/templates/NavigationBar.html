@@ -5,23 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/navbar.css">
     <title>Document</title>
-    <style>
-        a{
-            padding: 10px;
-            color: aqua;
-        }
-        .mynav{
-            background-color: Black;
-            width: 100%;
-            height: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            color: red;
-        }
-    </style>
 </head>
 <body>
     <nav class="mynav">
@@ -34,6 +19,10 @@
         <a href="{% url 'Login' %}">Login</a>
         <a href="{% url 'Signin' %}">Sign In</a>
         {% endif %}
+        <!-- <form action="" method="get">
+            <input type="text" name="search" id="search" placeholder="Search">
+            <button type="submit">Search</button>
+        </form> -->
     </nav>
 
     {% block content %}
