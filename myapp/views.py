@@ -22,12 +22,12 @@ def SignIn(request):
         email1=request.POST['email']
         password1=request.POST['pswd']
         phone1=request.POST['phone']
-        data=User(name=name1,email=email1,password=password1,phone=phone1)
-        data.save()
         check=User.objects.filter(email=email1)
         if check:
             return render(request,'SignIn.html',{'messagesignin':"User already exists with this email"})
         else:
+            data=User(name=name1,email=email1,password=password1,phone=phone1)
+            data.save()
             return redirect('Login')
     return render(request,'SignIn.html')
 
@@ -85,11 +85,10 @@ def Home(request):
 
 def CategoryWiseProduct(request,id):
     categoryWiseData=Products.objects.filter(productcategory=id)
-    print("Category data:",categoryWiseData.values('productcategory_id'))
     return render(request,'CategoryWise.html',{"categoryWiseData":categoryWiseData})
 
 def SingleProduct(request,id):
-    SingleProductdata=Products.objects.get(pk=id)
+    SingleProductdata=Products.objects.get(productid=id)
     return render(request,'productget.html',{"SingleProductdata":SingleProductdata})
 
 def OrderView(request):
@@ -151,7 +150,7 @@ def BuyNow(request):
     if 'email' in request.session:
         loggedinuser=User.objects.get(email=request.session['email'])
         if request.method=="POST":
-            request.session['productid']=request.POST['id']
+            request.session['productid']=request.POST['productid']
             request.session['quantity']="1"
             request.session['userid']=loggedinuser.pk
             request.session['username']=loggedinuser.name
@@ -161,7 +160,9 @@ def BuyNow(request):
             request.session['orderAmount']=productdetails.price
             request.session['paymenyMethod']="Razorpay"
             request.session['transactionId']=""
-            
+            return redirect('razorpayView') 
+    else:
+        return redirect('Login')
 
 RAZOR_KEY_ID="rzp_test_vmxBmKwQ2RVxWn"
 RAZOR_KEY_SECRET="9QSbTgOiZ7vAOS29YN4tfpA0"
@@ -303,3 +304,50 @@ def ChangePassowrdUsingOTP(request):
         return render(request,'otpchangepassword.html',{"PasswordChanged":0})
     else:
         return render(request,'Forgotpassword.html',{"message":"OTP expired.Please generate a new OTP."})
+    
+def AddToCart(request,id):
+    print(0)
+    if 'email' in request.session:
+        print(0.1)
+        if request.method=="POST":
+            print(1)
+            productData=Products.objects.get(productid=int(id))
+            print(2)
+            userData=User.objects.get(email=request.session['email'])
+            print(3)
+            qty=1
+            addToCartData=MyCart(userId=userData.pk,productid=productData.productid,name=productData.productname,img=productData.productimg,price=productData.price,quantity=qty,totalprice=qty*productData.price,is_bought=False)
+            print(4)
+            addToCartData.save()
+            print(5)
+            return render(request,'Cart.html',{"isLoggedIn":1})
+    else:
+        print(6)
+        return render(request,'Login.html',{"isLoggedIn":0})
+# productid
+# name
+# img
+# price
+# quantity
+# totalprice
+# is_bought
+
+def ViewCart(request):
+    if 'email' in request.session:
+        userData=User.objects.get(email=request.session['email'])
+        myCartData=MyCart.objects.filter(userId=userData.pk)
+        finalTotal=0
+        productList=[]
+        for i in myCartData:
+            finalTotal+=int(i.totalprice)
+            productDict={}
+            productData=Products.objects.get(productid=i.productid)
+            productDict['name']=productData.productname
+            productDict['img']=productData.productimg
+            productDict['price']=productData.price
+            productDict['quantity']=i.quantity
+            productDict['total']=i.totalprice
+            productList.append(productDict)
+        print(productList)
+        return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItemas":len(productList),"isLoggedIn":1})
+    return render(request,'Cart.html',{"isLoggedIn":1})

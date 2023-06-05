@@ -5,6 +5,7 @@ from myapp.models import *
 # Register your models here.
 
 admin.site.register(Category)
+admin.site.register(MyCart)
 
 class FeedbackRegister(admin.ModelAdmin):
     list_display = ('email','phonenumber','message')

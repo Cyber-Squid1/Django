@@ -54,3 +54,13 @@ class Order(models.Model):
     
     def __str__(self):
         return self.userName
+    
+class MyCart(models.Model):
+    userId=models.CharField(max_length=200)
+    productid=models.CharField(max_length=200)
+    name=models.CharField(max_length=200)
+    img=models.ImageField(upload_to='mycart')
+    price=models.CharField(max_length=200)
+    quantity=models.CharField(max_length=200)
+    totalprice=models.CharField(max_length=200)
+    is_bought=models.BooleanField()

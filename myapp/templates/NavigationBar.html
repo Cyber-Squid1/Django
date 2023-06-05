@@ -15,6 +15,7 @@
         {% if isLoggedIn %}
         <a class="profile" href="{% url 'Profile' %}">Profile</a>
         <a href="{% url 'Logout' %}">Logout</a>
+        <a href="{% url 'ViewCart' %}">My Cart</a>
         {% else %}
         <a href="{% url 'Login' %}">Login</a>
         <a href="{% url 'Signin' %}">Sign In</a>

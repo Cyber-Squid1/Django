@@ -17,8 +17,10 @@ urlpatterns = [
     path('ordersuccess/',OrderSuccess,name="SuccessOrder"),
     path('product_filter/<int:id>/',CategoryWiseProduct,name="productfilter"),
     path('product_get/<int:id>/',SingleProduct,name="productget"),
+    path('addtocart/<int:id>/',AddToCart,name="addtocart"),
     path('search/',searchProduct,name="SearchProducts"),
     path('forgotpassword/',ForgotPassword,name="Forgotpassword"),
     path('otp/',VerifyOTP,name="Otp"),
     path('changepasswordotp/',ChangePassowrdUsingOTP,name="passwordchangeotp"),
+    path('cart/',ViewCart,name="ViewCart"),
 ]
