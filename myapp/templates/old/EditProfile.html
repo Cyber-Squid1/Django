@@ -1,0 +1,60 @@
+{% extends 'NavigationBar.html' %} {% block content %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      input {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div
+      style="
+        width: 400px;
+        border: 2px solid black;
+        padding: 10px;
+        background-color: grey;
+      "
+    >
+      <img
+        src="../static/manProfile.jpg"
+        alt=""
+        width="100px"
+        height="100px"
+        style="border: 2px solid black"
+      />
+      <form action="{% url 'EditProfile' %}" method="post">
+        {% csrf_token %}
+        <p>
+          Name:
+          <input type="text" name="name" id="" value="{{userdata.name}}" />
+        </p>
+        <p>
+          Phone Number:
+          <input type="number" name="phone" id="" value="{{userdata.phone}}" />
+        </p>
+        <p>
+          Email:
+          <input
+            type="email"
+            name=""
+            id=""
+            disabled
+            value="{{userdata.email}}"
+          />
+        </p>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+    <br />
+  </body>
+</html>
+
+{% endblock %}

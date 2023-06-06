@@ -1,0 +1,81 @@
+{% extends 'NavigationBar.html' %} {% block content %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      input {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div
+      style="
+        width: 400px;
+        border: 2px solid black;
+        padding: 10px;
+        background-color: grey;
+      "
+    >
+      <form action="{% url 'Profile' %}" method="get">
+        {% csrf_token %}
+        <img
+          src="../static/manProfile.jpg"
+          alt=""
+          width="100px"
+          height="100px"
+          style="border: 2px solid black"
+        />
+        <p>
+          Name:
+          <input type="text" name="" id="" disabled value="{{userdata.name}}" />
+        </p>
+        <p>
+          Phone Number:
+          <input
+            type="number"
+            name=""
+            id=""
+            disabled
+            value="{{userdata.phone}}"
+          />
+        </p>
+        <p>
+          Email:
+          <input
+            type="email"
+            name=""
+            id=""
+            disabled
+            value="{{userdata.email}}"
+          />
+        </p>
+      </form>
+    </div>
+    <br />
+    <button style="padding: 5px; margin: 5px; border: 2px solid black">
+      <a style="color: red" href="{% url 'ChangePass' %}">Change Password</a>
+    </button>
+    <button style="padding: 5px; margin: 5px; border: 2px solid black">
+      <a style="color: red" href="{% url 'EditProfile' %}">Edit details</a>
+    </button>
+    <p id="msg" style="color: green"></p>
+    {% if message %}
+        <script async>
+          console.log("Done")
+          document.getElementById("msg").innerHTML = "{{message}}";
+          setTimeout(function () {
+            document.getElementById("msg").innerHTML = " ";
+          }, 3000);
+        </script>
+        {% endif %}
+  </body>
+</html>
+
+{% endblock %}

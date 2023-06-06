@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter OTP</title>
+</head>
+<body>
+    <form action="{% url 'Otp' %}" method="post">
+        {% csrf_token %}
+        <p>Enter OTP: <input type="text" name="otp" id="" required></p>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="msg"></p>
+    {% if message %}
+    <script>
+        document.getElementById("msg").innerHTML = "{{message}}";
+    </script>
+    {% endif %}
+</body>
+</html>

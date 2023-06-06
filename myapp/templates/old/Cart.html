@@ -1,0 +1,57 @@
+{% extends 'NavigationBar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+  </head>
+  <body>
+    <div>
+      <p>{{numItems}} Items in the cart</p>
+    </div>
+    <div
+      style="
+        width: 80%;
+        justify-content: center;
+        display: flex;
+        border: 2px solid black;
+      "
+    >
+      <!--  -->
+      {% for i in productList %}
+      <div
+        style="
+          width: 100%;
+          padding: 10px;
+          height: 60px;
+          display: flex;
+          justify-content: space-evenly;
+        "
+      >
+        <div>
+          <img src="{{i.img.url}}" alt="" height="50px" width="50px" />
+        </div>
+        <div style="display: flex; justify-content: center">
+          <p>Name</p>
+          <p>{{i.name}}</p>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <p>Price</p>
+          <p>{{i.price}}</p>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <p>Quantity</p>
+          <p>{{i.quantity}}</p>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <p>Total Price</p>
+          <p>{{i.totalprice}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div>Grand Total={{finalTotal}}</div>
+  </body>
+</html>

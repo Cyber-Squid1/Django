@@ -13,138 +13,72 @@
       rel="stylesheet"
     />
     <title>Feedback Form</title>
-    <style>
-      * {
-        color: yellow;
-        font-weight: bold;
-        font-family: "Luxurious Roman";
-      }
-      body {
-        background: url("bgimg2.jfif");
-        background-size: 100%;
-        background-repeat: no-repeat;
-      }
-      .heading {
-        font-weight: bold;
-        color: red;
-        position: absolute;
-        right: 220px;
-        padding: 5px;
-        margin: 2px;
-        font-size: 50px;
-      }
-      .content {
-        max-width: 650px;
-        width: 90%;
-        margin: 2px;
-        font-size: 20px;
-        position: absolute;
-        top: 85px;
-        right: 40px;
-      }
-
-      input[type="email"],
-      input[type="number"],
-      input[type="submit"],
-      input[type="text"],
-      textarea {
-        font-weight: normal;
-        color: black;
-        padding: 10px;
-        margin: 1px;
-        border: 3px solid aqua;
-        border-radius: 5px;
-        width: 60%;
-      }
-      textarea{
-        width: 80%;
-        height: 80px;
-      }
-      input[type="text"] {
-        width: 30%;
-      }
-      input[type="submit"] {
-        font-weight: bold;
-        font-size: 20px;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 10px;
-        color: white;
-        background-color: crimson;
-        cursor: pointer;
-        width: 30%;
-      }
-      input[type="submit"]:hover {
-        background-color: black;
-        color: crimson;
-      }
-      fieldset {
-        background-color: grey;
-        border: 2px solid black;
-      }
-    </style>
   </head>
   <body>
-    <!--<script src="contact_form.js"></script> this code is for node.js -->
-    <p class="heading">Feedback Form</p>
-    <div class="content">
-      <form method="post" action="{% url 'ContactUs' %}">
+    <div class="container" id="contact">
+      <div class="row" style="margin-top: 50px">
+        <div class="col-md-4 py-3 py-md-0">
+          <div class="card">
+            <i class="fas fa-phone"> Phone</i>
+            <h6>+91 7015207360</h6>
+          </div>
+        </div>
+        <div class="col-md-4 py-3 py-md-0">
+          <div class="card">
+            <i class="fas fa-envelope"> Email</i>
+            <h6>electronic@eshop.com</h6>
+          </div>
+        </div>
+        <div class="col-md-4 py-3 py-md-0">
+          <div class="card">
+            <i class="fas fa-location-dot"> Address</i>
+            <h6>Jamnagar, Gujarat, India - 361142</h6>
+          </div>
+        </div>
+      </div>
+      <form action="{% url 'ContactUs' %}" method="post">
         {% csrf_token %}
-        <fieldset>
-          <p class="fname">
-            Enter Name:
+        <div class="row" style="margin-top: 30px">
+          <div class="col-md-4 py-3 py-md-0">
             <input
               type="text"
-              name="fname"
-              id="fname"
-              placeholder="First Name"
-              required
+              class="form-control form-control"
+              placeholder="Name"
+              name="name"
               value="{{userData.name}}"
             />
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
             <input
               type="text"
-              name="lname"
-              id="lname"
-              placeholder="Last Name"
-              required
-            />
-          </p>
-          <p>
-            Enter Phone number:
-            <input
-              type="number"
-              name="mob"
-              id="mob"
-              required
-              placeholder="XXXXXXXXXX"
-              value="{{userData.phone}}"
-            />
-          </p>
-          <p>
-            Enter Email:
-            <input
-              type="email"
+              class="form-control form-control"
+              placeholder="Email"
               name="mail"
-              id="mail"
-              required
-              placeholder="xyz@abc.com"
               value="{{userData.email}}"
             />
-          </p>
-          <p>
-            Enter Query: <br />
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
+            <input
+              type="text"
+              class="form-control form-control"
+              placeholder="Phone"
+              name="mob"
+              value="{{userData.phone}}"
+            />
+          </div>
+          <div class="form-group" style="margin-top: 30px">
             <textarea
+              class="form-control"
+              id=""
+              rows="5"
+              placeholder="Message"
               name="feedback"
-              id="query"
-              cols="20"
-              rows="10"
-              required
-              placeholder="Enter Query Here"
             ></textarea>
-          </p>
-          <input type="submit" value="Send" />
-          {% if data %}<p>Thank you for Your feedback</p>{% endif %}
-        </fieldset>
+          </div>
+          <div class="messagebtn text-center">
+            <button type="submit">Message</button>
+          </div>
+        </div>
       </form>
     </div>
   </body>

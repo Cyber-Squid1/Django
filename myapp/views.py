@@ -59,15 +59,23 @@ def Contactus(request):
         if request.method=="GET":
             userData=User.objects.get(email=request.session['email'])
             return render(request,'Contactus.html',{"userData":userData,"isLoggedIn":1})
-    if request.method=="POST":
-        fname1=request.POST['fname']
-        lname1=request.POST['lname']
-        phone=request.POST['mob']
-        email1=request.POST['mail']
-        message1=request.POST['feedback']
-        data=Feedback.objects.create(firstname=fname1,lastname=lname1,email=email1,phonenumber=phone,message=message1)
-        return render(request,'contactus.html',{"data":data,"isLoggedIn":1})
-    return render(request,'contactus.html',{"isLoggedIn":1})
+        if request.method=="POST":
+            name1=request.POST['name']
+            phone=request.POST['mob']
+            email1=request.POST['mail']
+            message1=request.POST['feedback']
+            data=Feedback.objects.create(name=name1,email=email1,phonenumber=phone,message=message1)
+            return render(request,'Contactus.html',{"data":data,"isLoggedIn":1,"message":"Your Query has been recorded"})
+        return render(request,'Contactus.html',{"data":data,"isLoggedIn":1})
+    else:
+        if request.method=="POST":
+            name1=request.POST['name']
+            phone=request.POST['mob']
+            email1=request.POST['mail']
+            message1=request.POST['feedback']
+            data=Feedback.objects.create(name=name1,email=email1,phonenumber=phone,message=message1)
+            return render(request,'contactus.html',{"isLoggedIn":0,"message":"Your Query has been recorded"})
+        return render(request,'contactus.html',{"isLoggedIn":0})
 
 def product_all(request):
     data=Products.objects.all()
@@ -80,7 +88,7 @@ def Home(request):
         return render(request,'Home.html',{"categorydata":categorydata,"isLoggedIn":1})
     else:
         categorydata=Category.objects.all()
-        return render(request,'Home.html',{"categorydata":categorydata})
+        return render(request,'Home.html',{"categorydata":categorydata,"isLoggedIn":0})
     
 
 def CategoryWiseProduct(request,id):

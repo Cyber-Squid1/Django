@@ -1,45 +1,50 @@
-{% extends 'NavigationBar.html' %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-        
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <div class="col py-3">
-        <section style="background-color: #eee">
-          <div class="container py-5">
-            <div class="row">
-              {% for i in categorydata %}
-              <div class="col-md-4 col-lg-4 mb-4 mb-lg-0">
-                <a href="{% url 'productfilter' i.id %}">
-                  <div class="card">
-                    <img
-                      src="{{i.img.url}}"
-                      class="card-img-top"
-                      height="100px"
-                    />
-                    <div class="card-body" style="align-self: center">
-                      <h5 class="mb-0" style="align-self: center">
-                        {{i.categoryname}}
-                      </h5>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
+{% extends 'NavigationBar.html' %} 
+{% block content %}
+{% load static%}
+<!-- home content -->
+<section class="home">
+  <div class="content">
+    <h1>
+      <span>Electronic Products</span>
+      <br />
+      Up To <span id="span2">50%</span> Off
+    </h1>
+    <p>
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, saepe.
+      <br />Lorem ipsum dolor sit amet consectetur.
+    </p>
+    <div class="btn"><button>Shop Now</button></div>
+  </div>
+  <div class="img">
+    <img src="{% static '/images/background.png' %}" alt="" />
+  </div>
+</section>
+
+<!-- home content -->
+<!-- Product Card -->
+
+<div class="container" id="product-cards">
+  <h1 class="text-center">PRODUCTS</h1>
+  {% for i in categorydata %}
+  <div class="row" style="margin-top: 30px;">
+    <div class="col-md-3 py-3 py-md-0">
+      <div class="card">
+        <a href="{% url 'productfilter' i.id %}">
+          <img src="{{i.img.url}}" alt="" height="259px" width="259px">
+          <div class="card-body">
+            <h3 class="text-center">{{i.categoryname}}</h3>
+            <div class="star text-center">
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
             </div>
           </div>
-        </section>
+        </a>
       </div>
     </div>
-  </body>
-</html>
-
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}

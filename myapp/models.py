@@ -26,12 +26,11 @@ class User(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
     password = models.CharField(max_length=200)
-    phone=models.IntegerField()
+    phone=models.BigIntegerField()
     
 
 class Feedback(models.Model):
-    firstname=models.CharField(max_length=50)
-    lastname=models.CharField(max_length=50)
+    name=models.CharField(max_length=200)
     email=models.EmailField()
     phonenumber=models.IntegerField()
     message=models.CharField(max_length=1000)

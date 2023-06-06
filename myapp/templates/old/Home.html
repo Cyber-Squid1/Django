@@ -1,0 +1,45 @@
+{% extends 'NavigationBar.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="col py-3">
+        <section style="background-color: #eee">
+          <div class="container py-5">
+            <div class="row">
+              {% for i in categorydata %}
+              <div class="col-md-4 col-lg-4 mb-4 mb-lg-0">
+                <a href="{% url 'productfilter' i.id %}">
+                  <div class="card">
+                    <img
+                      src="{{i.img.url}}"
+                      class="card-img-top"
+                      height="100px"
+                    />
+                    <div class="card-body" style="align-self: center">
+                      <h5 class="mb-0" style="align-self: center">
+                        {{i.categoryname}}
+                      </h5>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
+
+{% endblock %}
