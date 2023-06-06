@@ -172,8 +172,8 @@ def BuyNow(request):
     else:
         return redirect('Login')
 
-RAZOR_KEY_ID="rzp_test_vmxBmKwQ2RVxWn"
-RAZOR_KEY_SECRET="9QSbTgOiZ7vAOS29YN4tfpA0"
+RAZOR_KEY_ID="rzp_test_9viBqTs2AhJfoy"
+RAZOR_KEY_SECRET="qnxki0MujgcumrjkSzeXfyew"
 client=razorpay.Client(auth=(RAZOR_KEY_ID,RAZOR_KEY_SECRET))
 
 def razorpayView(request):
