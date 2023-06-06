@@ -27,6 +27,7 @@
         </table>
         <form action="{% url 'BuyProduct' %}" method="post">
             {% csrf_token %}
+            <input type="hidden" value="{{SingleProductdata.productid}}" name="proid">
             <button type="submit">Buy Now</button>
         </form>
         <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post">  <!--SingleProductdata.productid-->

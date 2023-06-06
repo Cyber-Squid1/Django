@@ -158,13 +158,13 @@ def BuyNow(request):
     if 'email' in request.session:
         loggedinuser=User.objects.get(email=request.session['email'])
         if request.method=="POST":
-            request.session['productid']=request.POST['productid']
+            request.session['productid']=request.POST['proid']
             request.session['quantity']="1"
             request.session['userid']=loggedinuser.pk
             request.session['username']=loggedinuser.name
             request.session['userEmail']=loggedinuser.email
             request.session['userContact']=loggedinuser.phone
-            productdetails=Products.objects.get(id=request.POST['id'])
+            productdetails=Products.objects.get(productid=request.POST['proid'])
             request.session['orderAmount']=productdetails.price
             request.session['paymenyMethod']="Razorpay"
             request.session['transactionId']=""
