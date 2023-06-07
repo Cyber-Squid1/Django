@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2023 at 09:32 PM
+-- Generation Time: Jun 07, 2023 at 08:44 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -190,7 +190,19 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 (4, '2023-06-05 12:39:03.998904', '2', 'Football', 1, '[{\"added\": {}}]', 11, 1),
 (5, '2023-06-05 12:39:27.131967', '3', 'T-shirt', 1, '[{\"added\": {}}]', 11, 1),
 (6, '2023-06-05 12:39:56.100621', '4', 'Shirt', 1, '[{\"added\": {}}]', 11, 1),
-(7, '2023-06-05 19:28:03.762088', '2', 'User object (2)', 3, '', 10, 1);
+(7, '2023-06-05 19:28:03.762088', '2', 'User object (2)', 3, '', 10, 1),
+(8, '2023-06-06 18:00:21.276406', '4', 'Shirt', 3, '', 11, 1),
+(9, '2023-06-06 18:00:21.370159', '3', 'T-shirt', 3, '', 11, 1),
+(10, '2023-06-06 18:00:21.428003', '2', 'Football', 3, '', 11, 1),
+(11, '2023-06-06 18:00:21.590566', '1', 'Basketball', 3, '', 11, 1),
+(12, '2023-06-06 18:00:37.803605', '2', 'Clothes', 3, '', 7, 1),
+(13, '2023-06-06 18:00:37.836517', '1', 'Sports', 3, '', 7, 1),
+(14, '2023-06-06 18:04:08.209529', '3', 'Fridge', 1, '[{\"added\": {}}]', 7, 1),
+(15, '2023-06-06 18:06:38.337512', '4', 'TV', 1, '[{\"added\": {}}]', 7, 1),
+(16, '2023-06-06 18:08:23.451211', '5', 'Laptop', 1, '[{\"added\": {}}]', 7, 1),
+(17, '2023-06-06 18:13:44.384439', '5', 'Asus TUF F15 Gaming Laptop', 1, '[{\"added\": {}}]', 11, 1),
+(18, '2023-06-06 18:20:36.611064', '6', 'Samsung Neo QLED TV', 1, '[{\"added\": {}}]', 11, 1),
+(19, '2023-06-06 18:24:40.157591', '7', 'Samsung Double Door Fridge', 1, '[{\"added\": {}}]', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +276,10 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (22, 'myapp', '0004_mycart', '2023-06-05 17:55:57.228480'),
 (23, 'myapp', '0005_alter_mycart_is_bought', '2023-06-05 18:18:20.394684'),
 (24, 'myapp', '0006_delete_mycart', '2023-06-05 18:22:20.380076'),
-(25, 'myapp', '0007_mycart', '2023-06-05 18:23:09.887643');
+(25, 'myapp', '0007_mycart', '2023-06-05 18:23:09.887643'),
+(26, 'myapp', '0008_alter_user_phone', '2023-06-06 11:32:55.036926'),
+(27, 'myapp', '0009_delete_feedback', '2023-06-06 17:31:27.659899'),
+(28, 'myapp', '0010_feedback', '2023-06-06 17:32:01.025056');
 
 -- --------------------------------------------------------
 
@@ -283,7 +298,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyFj8sOgjAURP-la9PUUvpwZUxcGj-B3PZeHgqUQFkZ_92SsGHl9syZSebDnmm6D9D17MLiMEGiXkphpBDy2mychziwE6tgTW21LjRXHWb3fGQewpvGLcAXjE3MrTHNneebwvd04Y-I1N929zDQwtLmtkPvS2c0oXIqBB1QSCJQspSFsFKAtQKcLuoQvLG1M0AGM9VGqdKjyqP09833B4TTT4E:1q6F1d:YQLD3u19it1lGmbA616uG0RjS5rWndSCeV0jo4EMH2o', '2023-06-19 18:33:53.590636');
+('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyNj70OgjAUhd-lsyG1FEqdjImDAzHxBchte_lRaAmUAY3vbpuwsLl-3zkn937I3Y_XAbqenIgbRvDYM0YFo5Sdm8gT7QZyIBUsvq2WGaeqMyF73DMF-oU2CvME27jQsn7qVBIjyWbnpHQG-8uW3Q20MLehLY1SmRQ5Gi651rk2lCECZxlLacEoFAUFmae11koUtRSAwgSaC84zZXgYxT--GWEd0K4l-tbFox_wdlOAQfkJ7Azad87eoiLfH0kbX2w:1q6mpe:1WjVlb2DoOKtfOjY2gUw2gNO4UhkSf3rXwkzd5KXN8g', '2023-06-21 06:39:46.888609');
 
 -- --------------------------------------------------------
 
@@ -302,8 +317,9 @@ CREATE TABLE `myapp_category` (
 --
 
 INSERT INTO `myapp_category` (`id`, `categoryname`, `img`) VALUES
-(1, 'Sports', 'category/sports_iHBwYuh.jpg'),
-(2, 'Clothes', 'category/clothes_LP4Mmu5.jpg');
+(3, 'Fridge', 'category/FridgeCategory.jpg'),
+(4, 'TV', 'category/TVcategory.jpg'),
+(5, 'Laptop', 'category/Laptopcategory.jpg');
 
 -- --------------------------------------------------------
 
@@ -313,12 +329,18 @@ INSERT INTO `myapp_category` (`id`, `categoryname`, `img`) VALUES
 
 CREATE TABLE `myapp_feedback` (
   `id` bigint(20) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `lastname` varchar(50) NOT NULL,
+  `name` varchar(200) NOT NULL,
   `email` varchar(254) NOT NULL,
   `phonenumber` int(11) NOT NULL,
   `message` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `myapp_feedback`
+--
+
+INSERT INTO `myapp_feedback` (`id`, `name`, `email`, `phonenumber`, `message`) VALUES
+(1, 'Om Patel', '', 2147483647, 'Hello');
 
 -- --------------------------------------------------------
 
@@ -344,7 +366,8 @@ CREATE TABLE `myapp_mycart` (
 
 INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `name`, `img`, `price`, `quantity`, `totalprice`, `is_bought`) VALUES
 (1, '1', '1', 'Basketball', 'products/basketball_Dw1UqCV.jpg', '800', '1', '800', 0),
-(2, '1', '3', 'T-shirt', 'products/tshirt_AsgDEN4.jpg', '399', '1', '399', 0);
+(2, '1', '3', 'T-shirt', 'products/tshirt_AsgDEN4.jpg', '399', '1', '399', 0),
+(3, '1', '7', 'Samsung Double Door Fridge', 'products/fridge1.jpg', '126000', '1', '126000', 0);
 
 -- --------------------------------------------------------
 
@@ -367,6 +390,14 @@ CREATE TABLE `myapp_order` (
   `transactionId` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `myapp_order`
+--
+
+INSERT INTO `myapp_order` (`orderDate`, `id`, `productid`, `productqty`, `userId`, `userName`, `userEmail`, `userContact`, `address`, `orderAmount`, `paymentMethod`, `transactionId`) VALUES
+('2023-06-07 06:38:11.622992', 2, '7', '1', '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywZFZpRF9vE8i'),
+('2023-06-07 06:39:46.829300', 3, '7', '1', '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywavkCpEi0ajn');
+
 -- --------------------------------------------------------
 
 --
@@ -388,10 +419,9 @@ CREATE TABLE `myapp_products` (
 --
 
 INSERT INTO `myapp_products` (`productid`, `productname`, `productimg`, `price`, `productdescription`, `quantity`, `productcategory_id`) VALUES
-(1, 'Basketball', 'products/basketball_Dw1UqCV.jpg', 800, 'Size 7 Basketball', 50, 1),
-(2, 'Football', 'products/football_8ZejUyW.jpg', 750, 'Cosco football', 40, 1),
-(3, 'T-shirt', 'products/tshirt_AsgDEN4.jpg', 399, 'Blue T-Shirt', 80, 2),
-(4, 'Shirt', 'products/shirt_cN7L47W.jpg', 699, 'Red shirt', 60, 2);
+(5, 'Asus TUF F15 Gaming Laptop', 'products/Laptop1.jpg', 2, '11th Gen Intel Core i7 processor\r\n16 GB GDDR4 Ram\r\nNvidia RTX 2070 graphics card(8GB GDDR6 Memory)\r\nUHD 144Hz LED Display', 40, 5),
+(6, 'Samsung Neo QLED TV', 'products/TV1.jpeg', 2, '72 inch Display with 120Hz refresh rate at 8K resolution', 30, 4),
+(7, 'Samsung Double Door Fridge', 'products/fridge1.jpg', 2, 'Glossy Black Double Door fridge\r\nWi-Fi enabled with on door display', 47, 3);
 
 -- --------------------------------------------------------
 
@@ -404,7 +434,7 @@ CREATE TABLE `myapp_user` (
   `name` varchar(200) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `phone` int(11) NOT NULL
+  `phone` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -412,7 +442,8 @@ CREATE TABLE `myapp_user` (
 --
 
 INSERT INTO `myapp_user` (`id`, `name`, `email`, `password`, `phone`) VALUES
-(1, 'Om1230', 'ompatel22072002@gmail.com', 'om1', 1230);
+(1, 'Om1230', 'ompatel22072002@gmail.com', 'om1', 1230),
+(3, 'Account1', 'acc@acc.com', 'acc123', 2147483647);
 
 --
 -- Indexes for dumped tables
@@ -572,7 +603,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `django_content_type`
@@ -584,43 +615,43 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `myapp_category`
 --
 ALTER TABLE `myapp_category`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `myapp_feedback`
 --
 ALTER TABLE `myapp_feedback`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `myapp_mycart`
 --
 ALTER TABLE `myapp_mycart`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `myapp_order`
 --
 ALTER TABLE `myapp_order`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `myapp_products`
 --
 ALTER TABLE `myapp_products`
-  MODIFY `productid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `productid` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `myapp_user`
 --
 ALTER TABLE `myapp_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
