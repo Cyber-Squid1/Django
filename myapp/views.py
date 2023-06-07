@@ -166,7 +166,7 @@ def BuyNow(request):
             request.session['userContact']=loggedinuser.phone
             productdetails=Products.objects.get(productid=request.POST['proid'])
             request.session['orderAmount']=productdetails.price
-            request.session['paymenyMethod']="Razorpay"
+            request.session['paymentMethod']="Razorpay"
             request.session['transactionId']=""
             return redirect('razorpayView') 
     else:
@@ -174,12 +174,12 @@ def BuyNow(request):
 
 RAZOR_KEY_ID="rzp_test_9viBqTs2AhJfoy"
 RAZOR_KEY_SECRET="qnxki0MujgcumrjkSzeXfyew"
-client=razorpay.Client(auth=(RAZOR_KEY_ID,RAZOR_KEY_SECRET))
+razorpay_client=razorpay.Client(auth=(RAZOR_KEY_ID,RAZOR_KEY_SECRET))
 
 def razorpayView(request):
     currency='INR'
     amount=int(request.session['orderAmount'])*100
-    razorpay_order=client.order.create(dict(amount=amount,currency=currency))
+    razorpay_order=razorpay_client.order.create(dict(amount=amount,currency=currency,payment_capture='0'))
     razorpay_order_id = razorpay_order['id']
     callback_url = 'http://127.0.0.1:8000/paymenthandler/'
     context = {}
@@ -203,36 +203,38 @@ def paymenthandler(request):
                 'razorpay_payment_id': payment_id,
                 'razorpay_signature': signature
             }
-            result = client.utility.verify_payment_signature(params_dict)
+            result=razorpay_client.utility.verify_payment_signature(params_dict)
             
-            amount = int(request.session['orderAmount'])*100
-            client.payment.capture(payment_id, amount)
+            if result is not None:
+                amount = int(request.session['orderAmount'])*100
+                razorpay_client.payment.capture(payment_id,amount)
 
-            orderTable = Order()
-            orderTable.productid=request.session['productid']
-            orderTable.productqty=request.session['quantity']
-            orderTable.userId = request.session['userid']
-            orderTable.userName = request.session['username']
-            orderTable.userEmail = request.session['userEmail']
-            orderTable.userContact = request.session['userContact']
-            orderTable.address = request.session['address']
-            orderTable.orderAmount = request.session['orderAmount']
-            orderTable.paymentMethod = request.session['paymentMethod']
-            orderTable.transactionId = payment_id
-            productData=Products.objects.get(id=request.session['productid'])
-            productData.quantity=productData.quantity-int(request.session['quantity'])
-            productData.save()
-            orderTable.save()
-            del request.session['productid']
-            del request.session['quantity']
-            del request.session['userid']
-            del request.session['username']
-            del request.session['userEmail']
-            del request.session['userContact']
-            del request.session['address']
-            del request.session['orderAmount']
-            del request.session['paymentMethod']
-            return redirect('SuccessOrder')
+                orderTable = Order()
+                orderTable.productid=request.session['productid']
+                orderTable.productqty=request.session['quantity']
+                orderTable.userId = request.session['userid']
+                orderTable.userName = request.session['username']
+                orderTable.userEmail = request.session['userEmail']
+                orderTable.userContact = request.session['userContact']
+                orderTable.address = "jamnagar"
+                orderTable.orderAmount = request.session['orderAmount']
+                orderTable.paymentMethod = request.session['paymentMethod']
+                orderTable.transactionId = payment_id
+                productData=Products.objects.get(productid=request.session['productid'])
+                productData.quantity=productData.quantity-int(request.session['quantity'])
+                productData.save()
+                orderTable.save()
+                del request.session['productid']
+                del request.session['quantity']
+                del request.session['userid']
+                del request.session['username']
+                del request.session['userEmail']
+                del request.session['userContact']
+                del request.session['orderAmount']
+                del request.session['paymentMethod']
+                return redirect('SuccessOrder')
+            else:
+                return HttpResponseBadRequest()
         except:
             return HttpResponseBadRequest()
     else:
@@ -275,15 +277,11 @@ def ForgotPassword(request):
                 fail_silently=False,
                 )
                 request.session['otpemail']=useremail
-                print(1)
                 return render(request,'otp.html',{'message':'OTP Sent To Your Email'})
             else:
-                print(2)
                 return render(request,'Forgotpassword.html',{'message':'Email Id Not Found'})
         except:
-            print(3)
             return render(request,'Forgotpassword.html',{'message':'Email Id Not Found'})
-    print(4)
     return render(request,'Forgotpassword.html')
 
 
