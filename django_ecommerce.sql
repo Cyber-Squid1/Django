@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2023 at 08:44 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jun 08, 2023 at 12:37 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `auth_group` (
   `id` int(11) NOT NULL,
   `name` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -42,7 +42,7 @@ CREATE TABLE `auth_group_permissions` (
   `id` bigint(20) NOT NULL,
   `group_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `auth_permission` (
   `name` varchar(255) NOT NULL,
   `content_type_id` int(11) NOT NULL,
   `codename` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `auth_permission`
@@ -129,7 +129,7 @@ CREATE TABLE `auth_user` (
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `auth_user`
@@ -148,7 +148,7 @@ CREATE TABLE `auth_user_groups` (
   `id` bigint(20) NOT NULL,
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE TABLE `auth_user_user_permissions` (
   `id` bigint(20) NOT NULL,
   `user_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE `django_admin_log` (
   `change_message` longtext NOT NULL,
   `content_type_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `django_admin_log`
@@ -214,7 +214,7 @@ CREATE TABLE `django_content_type` (
   `id` int(11) NOT NULL,
   `app_label` varchar(100) NOT NULL,
   `model` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `django_content_type`
@@ -245,7 +245,7 @@ CREATE TABLE `django_migrations` (
   `app` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `django_migrations`
@@ -279,7 +279,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (25, 'myapp', '0007_mycart', '2023-06-05 18:23:09.887643'),
 (26, 'myapp', '0008_alter_user_phone', '2023-06-06 11:32:55.036926'),
 (27, 'myapp', '0009_delete_feedback', '2023-06-06 17:31:27.659899'),
-(28, 'myapp', '0010_feedback', '2023-06-06 17:32:01.025056');
+(28, 'myapp', '0010_feedback', '2023-06-06 17:32:01.025056'),
+(29, 'myapp', '0011_mycart_orderid_products_vendorid', '2023-06-08 10:36:16.608380');
 
 -- --------------------------------------------------------
 
@@ -291,14 +292,14 @@ CREATE TABLE `django_session` (
   `session_key` varchar(40) NOT NULL,
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `django_session`
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyNj70OgjAUhd-lsyG1FEqdjImDAzHxBchte_lRaAmUAY3vbpuwsLl-3zkn937I3Y_XAbqenIgbRvDYM0YFo5Sdm8gT7QZyIBUsvq2WGaeqMyF73DMF-oU2CvME27jQsn7qVBIjyWbnpHQG-8uW3Q20MLehLY1SmRQ5Gi651rk2lCECZxlLacEoFAUFmae11koUtRSAwgSaC84zZXgYxT--GWEd0K4l-tbFox_wdlOAQfkJ7Azad87eoiLfH0kbX2w:1q6mpe:1WjVlb2DoOKtfOjY2gUw2gNO4UhkSf3rXwkzd5KXN8g', '2023-06-21 06:39:46.888609');
+('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyFj70OgjAUhd-lsyG1FEqdjImDAzHxBchte_lRaAmUAY3vbpuwMLl-3zkn937I3Y_XAbqenIgbRvDYM0YFo5Sdm8gT7QZyIBUsvq2WGaeqMyF73DMF-oU2CvME27jQsn7qVBIjyWbnpHQG-8uW3Q20MLehLY1SmRQ5Gi651rk2lCECZxlLacEoFAUFmae11koUtRSAwgSaC84zZXgYHWEd0K4l-tbFgx7wdlOAQfkJ7Azad87eogoI__7-_QGD419s:1q7Bwf:0m7cr5RbLKWCWBhUYRZc_pUImNqFQfkVhStRvxNm1nk', '2023-06-22 09:28:41.111928');
 
 -- --------------------------------------------------------
 
@@ -310,7 +311,7 @@ CREATE TABLE `myapp_category` (
   `id` bigint(20) NOT NULL,
   `categoryname` varchar(200) NOT NULL,
   `img` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_category`
@@ -333,7 +334,7 @@ CREATE TABLE `myapp_feedback` (
   `email` varchar(254) NOT NULL,
   `phonenumber` int(11) NOT NULL,
   `message` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_feedback`
@@ -357,17 +358,17 @@ CREATE TABLE `myapp_mycart` (
   `price` varchar(200) NOT NULL,
   `quantity` varchar(200) NOT NULL,
   `totalprice` varchar(200) NOT NULL,
-  `is_bought` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `is_bought` tinyint(1) NOT NULL,
+  `orderId` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_mycart`
 --
 
-INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `name`, `img`, `price`, `quantity`, `totalprice`, `is_bought`) VALUES
-(1, '1', '1', 'Basketball', 'products/basketball_Dw1UqCV.jpg', '800', '1', '800', 0),
-(2, '1', '3', 'T-shirt', 'products/tshirt_AsgDEN4.jpg', '399', '1', '399', 0),
-(3, '1', '7', 'Samsung Double Door Fridge', 'products/fridge1.jpg', '126000', '1', '126000', 0);
+INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `name`, `img`, `price`, `quantity`, `totalprice`, `is_bought`, `orderId`) VALUES
+(3, '1', '7', 'Samsung Double Door Fridge', 'products/fridge1.jpg', '2', '1', '2', 0, '0'),
+(4, '1', '6', 'Samsung Neo QLED TV', 'products/TV1.jpeg', '2', '1', '2', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -388,7 +389,7 @@ CREATE TABLE `myapp_order` (
   `orderAmount` int(11) NOT NULL,
   `paymentMethod` varchar(200) NOT NULL,
   `transactionId` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_order`
@@ -411,17 +412,18 @@ CREATE TABLE `myapp_products` (
   `price` int(11) NOT NULL,
   `productdescription` longtext NOT NULL,
   `quantity` int(11) NOT NULL,
-  `productcategory_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `productcategory_id` bigint(20) NOT NULL,
+  `vendorid` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_products`
 --
 
-INSERT INTO `myapp_products` (`productid`, `productname`, `productimg`, `price`, `productdescription`, `quantity`, `productcategory_id`) VALUES
-(5, 'Asus TUF F15 Gaming Laptop', 'products/Laptop1.jpg', 2, '11th Gen Intel Core i7 processor\r\n16 GB GDDR4 Ram\r\nNvidia RTX 2070 graphics card(8GB GDDR6 Memory)\r\nUHD 144Hz LED Display', 40, 5),
-(6, 'Samsung Neo QLED TV', 'products/TV1.jpeg', 2, '72 inch Display with 120Hz refresh rate at 8K resolution', 30, 4),
-(7, 'Samsung Double Door Fridge', 'products/fridge1.jpg', 2, 'Glossy Black Double Door fridge\r\nWi-Fi enabled with on door display', 47, 3);
+INSERT INTO `myapp_products` (`productid`, `productname`, `productimg`, `price`, `productdescription`, `quantity`, `productcategory_id`, `vendorid`) VALUES
+(5, 'Asus TUF F15 Gaming Laptop', 'products/Laptop1.jpg', 2, '11th Gen Intel Core i7 processor\r\n16 GB GDDR4 Ram\r\nNvidia RTX 2070 graphics card(8GB GDDR6 Memory)\r\nUHD 144Hz LED Display', 40, 5, ''),
+(6, 'Samsung Neo QLED TV', 'products/TV1.jpeg', 2, '72 inch Display with 120Hz refresh rate at 8K resolution', 30, 4, ''),
+(7, 'Samsung Double Door Fridge', 'products/fridge1.jpg', 2, 'Glossy Black Double Door fridge\r\nWi-Fi enabled with on door display', 47, 3, '');
 
 -- --------------------------------------------------------
 
@@ -435,7 +437,7 @@ CREATE TABLE `myapp_user` (
   `email` varchar(254) NOT NULL,
   `password` varchar(200) NOT NULL,
   `phone` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_user`
@@ -615,7 +617,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `myapp_category`
@@ -633,7 +635,7 @@ ALTER TABLE `myapp_feedback`
 -- AUTO_INCREMENT for table `myapp_mycart`
 --
 ALTER TABLE `myapp_mycart`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `myapp_order`
