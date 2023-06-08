@@ -1,7 +1,4 @@
-from datetime import date
-
 from django.db import models
-
 
 class Category(models.Model):
     categoryname = models.CharField(max_length=200)
@@ -9,7 +6,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.categoryname
-
 
 class Products(models.Model):
     vendorid=models.CharField(max_length=200,default="")
@@ -28,6 +24,7 @@ class User(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=200)
     phone=models.BigIntegerField()
+    address=models.CharField(max_length=200,default="")
     
 
 class Feedback(models.Model):
@@ -40,8 +37,8 @@ class Feedback(models.Model):
         return self.email
     
 class Order(models.Model):
-    productid=models.CharField(max_length=200)
-    productqty=models.CharField(max_length=200)
+    # productid=models.CharField(max_length=200)
+    # productqty=models.CharField(max_length=200)
     userId=models.CharField(max_length=200)
     userName=models.CharField(max_length=200)
     userEmail=models.CharField(max_length=200)
@@ -58,10 +55,7 @@ class Order(models.Model):
 class MyCart(models.Model):
     userId=models.CharField(max_length=200)
     productid=models.CharField(max_length=200)
-    name=models.CharField(max_length=200)
-    img=models.ImageField(upload_to='mycart')
-    price=models.CharField(max_length=200)
     quantity=models.CharField(max_length=200)
     totalprice=models.CharField(max_length=200)
-    is_bought=models.BooleanField()
+    # is_bought=models.BooleanField()
     orderId=models.CharField(max_length=200,default="0")

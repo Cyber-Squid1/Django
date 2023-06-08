@@ -6,7 +6,7 @@
         <p>
           <span class="h2">Shopping Cart </span
           ><span class="h4">({{numItems}} item in your cart)</span>
-          <p><a href="#">Remove All Items</a></p>
+          <p><a href="{% url 'RemoveAllItems' %}">Remove All Items</a></p>
         </p>
         {% for i in productList %}
         <div class="card mb-4">
@@ -51,7 +51,7 @@
               </div>
               <div class="col-md-2 d-flex justify-content-center">
                 <div>
-                  <a href="#">Remove</a>
+                  <a href="{% url 'Remove1Item' i.productid %}">Remove</a>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
 
         <div class="d-flex justify-content-end">
           <a class="btn btn-light btn-lg me-2" href="{% url 'Home' %}">Continue shopping</a>
-          <a class="btn btn-primary btn-lg" href="#">Check out<a>
+          <a class="btn btn-primary btn-lg" href="{% url 'Shipping' %}">Check out<a>
         </div>
       </div>
     </div>

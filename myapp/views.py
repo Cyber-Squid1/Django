@@ -250,9 +250,8 @@ def OrderSuccess(request):
 def searchProduct(request):
     word=request.GET.get('search')
     wordset=word.split(" ")
-    # Q(Category__categoryname__icontains=i)|
     for i in wordset:
-        searchData=Products.objects.filter(Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
+        searchData=Products.objects.filter(Q(productcategory__categoryname__icontains=i)|Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
         return render(request,'product_table.html',{"data":searchData,"s":word})
 
 
@@ -318,11 +317,10 @@ def AddToCart(request,id):
             productData=Products.objects.get(productid=int(id))
             userData=User.objects.get(email=request.session['email'])
             qty=1
-            addToCartData=MyCart(userId=userData.pk,productid=productData.productid,name=productData.productname,img=productData.productimg,price=productData.price,quantity=qty,totalprice=qty*productData.price,is_bought=False)
+            addToCartData=MyCart(userId=userData.pk,productid=productData.productid,quantity=qty,totalprice=qty*productData.price,orderId="0")
             addToCartData.save()
-            return render(request,'Cart.html',{"isLoggedIn":1})
+            return redirect('ViewCart')
     else:
-        print(6)
         return render(request,'Login.html',{"isLoggedIn":0})
 
 
@@ -336,12 +334,14 @@ def ViewCart(request):
             finalTotal+=int(i.totalprice)
             productDict={}
             productData=Products.objects.get(productid=i.productid)
+            productDict['productid']=productData.productid
             productDict['name']=productData.productname
             productDict['img']=productData.productimg
             productDict['price']=productData.price
             productDict['quantity']=i.quantity
             productDict['total']=i.totalprice
             productList.append(productDict)
+        print(productList)
         return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItems":len(productList),"isLoggedIn":1})
     return render(request,'Cart.html',{"isLoggedIn":0})
 
@@ -349,6 +349,42 @@ def shipping(request):
     # <a class="btn btn-primary btn-lg" href="{% url 'shiping' %}">Check out<a>
     return 0
 
-def RemoveSIngleProduct(request):
-    # <a class="lead fw-normal mb-0" href="{% url 'remove' i.id %}">Remove</a>
-    return 0
+def RemoveSingleItem(request,id):
+    if 'email' in request.session:
+        removeItemData=MyCart.objects.get(productid=id)
+        removeItemData.delete()
+        return redirect('ViewCart')
+    else:
+        return redirect('Login')
+
+def Shipping(request):
+    if 'email' in request.session:
+        userdata=UserRegister.objects.get(email=request.session['email'])
+        cartdata=Cartmodel.objects.filter(userId=userdata.pk,orderId="0")
+        finaltotal=0
+        for i in cartdata:
+            finaltotal+=int(i.totalprice)
+        if request.POST:
+            request.session['productid']="0"
+            request.session['quantity']="0"
+            request.session['userId']=userdata.pk
+            request.session['username']=request.POST['name']
+            request.session['userEmail']=request.POST['email']
+            request.session['userContact']=request.POST['phone']
+            request.session['address']=request.POST['address']
+            request.session['orderAmount']=request.POST['orderAmount']
+            request.session['paymentMethod']="Razorpay"
+            request.session['transactionId']=""
+            return redirect('razorpayView')
+        return render(request,'shiping.html',{'finalorder':finaltotal,'user':userdata})
+    else:
+        return redirect('login1')
+
+def RemoveAllItems(request):
+    if 'email' in request.session:
+        userData=User.objects.get(email=request.session['email'])
+        data=MyCart.objects.filter(userId=userData.pk ,orderId="0")
+        data.delete()
+        return redirect('Cart')
+    else:
+        return redirect('Login')

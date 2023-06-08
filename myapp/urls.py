@@ -20,7 +20,10 @@ urlpatterns = [
     path('addtocart/<int:id>/',AddToCart,name="addtocart"),
     path('search/',searchProduct,name="SearchProducts"),
     path('forgotpassword/',ForgotPassword,name="Forgotpassword"),
+    path('removeItem/<int:id>/',RemoveSingleItem,name="Remove1Item"),
+    path('removeAllItems/',RemoveAllItems,name="RemoveAllItems"),
     path('otp/',VerifyOTP,name="Otp"),
     path('changepasswordotp/',ChangePassowrdUsingOTP,name="passwordchangeotp"),
     path('cart/',ViewCart,name="ViewCart"),
+    path('shipping/',Shipping,name="Shipping"),
 ]
