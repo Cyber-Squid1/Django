@@ -7,9 +7,9 @@
       <div class="row">
         {% for i in categoryWiseData %}
         <div class="col-md-4 col-lg-4 mb-4 mb-lg-0">
-          <a href="{% url 'productget' i.productid %}">
+          <a href="{% url 'productget' i.productid %}" style="text-decoration: none;">
             <div class="card">
-              <img src="{{i.productimg.url}}" class="card-img-top" height="100px" />
+              <img src="{{i.productimg.url}}" class="card-img-top" height="259px" width="259px"/>
               <div class="card-body" style="align-self: center">
                 <h5 class="mb-0" style="align-self: center">{{i.productname}}</h5>
                 <h5 class="mb-0" style="align-self: center">₹ {{i.price}}</h5>
@@ -24,3 +24,4 @@
 </div>
 
 {% endblock %}
+

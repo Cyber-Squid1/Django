@@ -199,7 +199,7 @@
     <nav class="navbar navbar-expand-lg" id="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'Home' %}" id="logo"
-          ><span id="span1">E</span>Lectronic <span>Shop</span></a
+          ><span id="span1">E</span>Lectronic <span>World</span></a
         >
         <button
           class="navbar-toggler"
@@ -238,7 +238,7 @@
               <ul
                 class="dropdown-menu"
                 aria-labelledby="navbarDropdown"
-                style="background-color: rgb(67 0 86)"
+                style="background-color: rgb(67 0 86);"
               >
                 <li><a class="dropdown-item" href="#">Samrt Phone</a></li>
                 <li><a class="dropdown-item" href="#">Mobile Phone</a></li>
@@ -258,12 +258,15 @@
               <a class="nav-link" href="{% url 'ContactUs' %}">Contact</a>
             </li>
           </ul>
-          <form class="d-flex" id="search">
+          <form class="d-flex" id="search" action="{% url 'SearchProducts' %}" method="get">
+            {% csrf_token %}
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
+              name="search"
+              value={{s}}
             />
             <button class="btn btn-outline-success" type="submit">
               Search

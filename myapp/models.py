@@ -12,6 +12,7 @@ class Category(models.Model):
 
 
 class Products(models.Model):
+    vendorid=models.CharField(max_length=200,default="")
     productid=models.BigAutoField(primary_key=True)
     productcategory=models.ForeignKey(Category, on_delete=models.CASCADE)
     productname=models.CharField(max_length=200)
@@ -63,3 +64,4 @@ class MyCart(models.Model):
     quantity=models.CharField(max_length=200)
     totalprice=models.CharField(max_length=200)
     is_bought=models.BooleanField()
+    orderId=models.CharField(max_length=200,default="0")

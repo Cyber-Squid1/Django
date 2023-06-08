@@ -1,57 +1,92 @@
-{% extends 'NavigationBar.html' %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart</title>
-  </head>
-  <body>
-    <div>
-      <p>{{numItems}} Items in the cart</p>
-    </div>
-    <div
-      style="
-        width: 80%;
-        justify-content: center;
-        display: flex;
-        border: 2px solid black;
-      "
-    >
-      <!--  -->
-      {% for i in productList %}
-      <div
-        style="
-          width: 100%;
-          padding: 10px;
-          height: 60px;
-          display: flex;
-          justify-content: space-evenly;
-        "
-      >
-        <div>
-          <img src="{{i.img.url}}" alt="" height="50px" width="50px" />
+{% extends 'NavigationBar.html' %} {% block content %} {% if numItems > 0 %}
+<section class="vh-100" style="background-color: whitesmoke">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <p>
+          <span class="h2">Shopping Cart </span
+          ><span class="h4">({{numItems}} item in your cart)</span>
+          <p><a href="#">Remove All Items</a></p>
+        </p>
+        {% for i in productList %}
+        <div class="card mb-4">
+          <div class="card-body p-4">
+            <div class="row align-items-center">
+              <div class="col-md-2">
+                <img
+                  src="{{i.img.url}}"
+                  class="img-fluid"
+                  alt="Generic placeholder image"
+                  height="100px"
+                  width="100px"
+                />
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <p class="small text-muted mb-4 pb-2">Name</p>
+                  <p class="lead fw-normal mb-0" style="font-size: 16px;">{{i.name}}</p>
+                </div>
+              </div>
+
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <p class="small text-muted mb-4 pb-2">Quantity</p>
+                  <p class="lead fw-normal mb-0">{{i.quantity}}</p>
+                </div>
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <p class="small text-muted mb-4 pb-2">Price</p>
+                  <p class="lead fw-normal mb-0">₹ {{i.price}}</p>
+                </div>
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <p class="small text-muted mb-4 pb-2">Total</p>
+                  <p class="lead fw-normal mb-0">₹{{i.total}}</p>
+                </div>
+                <!-- <div class="text-end">
+                  <a href="#">Remove</a>
+                </div> -->
+              </div>
+              <div class="col-md-2 d-flex justify-content-center">
+                <div>
+                  <a href="#">Remove</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="display: flex; justify-content: center">
-          <p>Name</p>
-          <p>{{i.name}}</p>
+        {% endfor %}
+        <div class="card mb-5">
+          <div class="card-body p-4">
+            <div class="float-end">
+              <p class="mb-0 me-5 d-flex align-items-center">
+                <span class="small text-muted me-2">Order total:</span>
+                <span class="lead fw-normal">₹ {{finalTotal}}</span>
+              </p>
+
+              <!-- <div>
+                <a class="lead fw-normal mb-0">Remove all</a>
+              </div> -->
+            </div>
+          </div>
         </div>
-        <div style="display: flex; justify-content: center">
-          <p>Price</p>
-          <p>{{i.price}}</p>
-        </div>
-        <div style="display: flex; justify-content: center">
-          <p>Quantity</p>
-          <p>{{i.quantity}}</p>
-        </div>
-        <div style="display: flex; justify-content: center">
-          <p>Total Price</p>
-          <p>{{i.totalprice}}</p>
+
+        <div class="d-flex justify-content-end">
+          <a class="btn btn-light btn-lg me-2" href="{% url 'Home' %}">Continue shopping</a>
+          <a class="btn btn-primary btn-lg" href="#">Check out<a>
         </div>
       </div>
-      {% endfor %}
     </div>
-    <div>Grand Total={{finalTotal}}</div>
-  </body>
-</html>
+  </div>
+</section>
+{% else %}
+
+<h1><a href="{% url 'Home' %}">Go For Shoping</a></h1>
+
+{% endif %} {% if message %}
+<script>
+  alert("{{message}}");
+</script>
+{% endif %} {% endblock %}

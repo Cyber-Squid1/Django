@@ -250,9 +250,10 @@ def OrderSuccess(request):
 def searchProduct(request):
     word=request.GET.get('search')
     wordset=word.split(" ")
+    # Q(Category__categoryname__icontains=i)|
     for i in wordset:
-        searchData=Products.objects.filter(Q(Category_categoryname_icontains=1)|Q(productname_icontains=i)|Q(price_icontains=i)).distinct()
-        return render(request,'product_table.html',{"searchData":searchData})
+        searchData=Products.objects.filter(Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
+        return render(request,'product_table.html',{"data":searchData,"s":word})
 
 
 def ForgotPassword(request):
@@ -312,31 +313,18 @@ def ChangePassowrdUsingOTP(request):
         return render(request,'Forgotpassword.html',{"message":"OTP expired.Please generate a new OTP."})
     
 def AddToCart(request,id):
-    print(0)
     if 'email' in request.session:
-        print(0.1)
         if request.method=="POST":
-            print(1)
             productData=Products.objects.get(productid=int(id))
-            print(2)
             userData=User.objects.get(email=request.session['email'])
-            print(3)
             qty=1
             addToCartData=MyCart(userId=userData.pk,productid=productData.productid,name=productData.productname,img=productData.productimg,price=productData.price,quantity=qty,totalprice=qty*productData.price,is_bought=False)
-            print(4)
             addToCartData.save()
-            print(5)
             return render(request,'Cart.html',{"isLoggedIn":1})
     else:
         print(6)
         return render(request,'Login.html',{"isLoggedIn":0})
-# productid
-# name
-# img
-# price
-# quantity
-# totalprice
-# is_bought
+
 
 def ViewCart(request):
     if 'email' in request.session:
@@ -354,6 +342,13 @@ def ViewCart(request):
             productDict['quantity']=i.quantity
             productDict['total']=i.totalprice
             productList.append(productDict)
-        print(productList)
-        return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItemas":len(productList),"isLoggedIn":1})
-    return render(request,'Cart.html',{"isLoggedIn":1})
+        return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItems":len(productList),"isLoggedIn":1})
+    return render(request,'Cart.html',{"isLoggedIn":0})
+
+def shipping(request):
+    # <a class="btn btn-primary btn-lg" href="{% url 'shiping' %}">Check out<a>
+    return 0
+
+def RemoveSIngleProduct(request):
+    # <a class="lead fw-normal mb-0" href="{% url 'remove' i.id %}">Remove</a>
+    return 0

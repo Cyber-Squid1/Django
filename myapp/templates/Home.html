@@ -10,10 +10,10 @@
       Up To <span id="span2">50%</span> Off
     </h1>
     <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, saepe.
-      <br />Lorem ipsum dolor sit amet consectetur.
+      Buy the best electronics products at the best price from Electronics World
+      <br />
+      <!-- Lorem ipsum dolor sit amet consectetur. -->
     </p>
-    <div class="btn"><button>Shop Now</button></div>
   </div>
   <div class="img">
     <img src="{% static '/images/background.png' %}" alt="" />
@@ -29,7 +29,7 @@
   <div class="row" style="margin-top: 30px;">
     <div class="col-md-3 py-3 py-md-0">
       <div class="card">
-        <a href="{% url 'productfilter' i.id %}">
+        <a href="{% url 'productfilter' i.id %}" style="text-decoration: none;">
           <img src="{{i.img.url}}" alt="" height="259px" width="259px">
           <div class="card-body">
             <h3 class="text-center">{{i.categoryname}}</h3>
