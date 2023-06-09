@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 12:37 PM
+-- Generation Time: Jun 09, 2023 at 08:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -280,7 +280,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (26, 'myapp', '0008_alter_user_phone', '2023-06-06 11:32:55.036926'),
 (27, 'myapp', '0009_delete_feedback', '2023-06-06 17:31:27.659899'),
 (28, 'myapp', '0010_feedback', '2023-06-06 17:32:01.025056'),
-(29, 'myapp', '0011_mycart_orderid_products_vendorid', '2023-06-08 10:36:16.608380');
+(29, 'myapp', '0011_mycart_orderid_products_vendorid', '2023-06-08 10:36:16.608380'),
+(30, 'myapp', '0012_remove_mycart_img_remove_mycart_is_bought_and_more', '2023-06-08 18:31:25.506476');
 
 -- --------------------------------------------------------
 
@@ -299,7 +300,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyFj70OgjAUhd-lsyG1FEqdjImDAzHxBchte_lRaAmUAY3vbpuwMLl-3zkn937I3Y_XAbqenIgbRvDYM0YFo5Sdm8gT7QZyIBUsvq2WGaeqMyF73DMF-oU2CvME27jQsn7qVBIjyWbnpHQG-8uW3Q20MLehLY1SmRQ5Gi651rk2lCECZxlLacEoFAUFmae11koUtRSAwgSaC84zZXgYHWEd0K4l-tbFgx7wdlOAQfkJ7Azad87eogoI__7-_QGD419s:1q7Bwf:0m7cr5RbLKWCWBhUYRZc_pUImNqFQfkVhStRvxNm1nk', '2023-06-22 09:28:41.111928');
+('5g5u5psmyp3ggfstu5wsyu4dg0i5o6t3', '.eJyNkL1OxDAMx98lM6pCLm0aJoTEwHA66V6gcmLfNdAmJU2Hgnh3HHTLbYz-_T9k-1ucyvI6Q5jEk0jzAoUmpaRRUqrna-WNT7N4EANsZRy2lfIQkL2P98yB_6BYBXyHeE2ciiUH11RLc1PX5piQppeb965ghHXktEXnWms6Qm21951HqYhAq1YdZK8k9L0E2x0u3jvTX6wBMsi0M1q3DjWXLrDPFPcjlTHVhc7wlTJDlkqGuIIvIcW3KjGif9y-5IQbp2rE8Py5QSyh7H9v-PkFrORo_Q:1q7h6Q:LSKmvB7bOfgAOjvrdmb5GkyeTKv5o-HqRYA0CyKwuEE', '2023-06-23 18:44:50.289699');
 
 -- --------------------------------------------------------
 
@@ -353,12 +354,8 @@ CREATE TABLE `myapp_mycart` (
   `id` bigint(20) NOT NULL,
   `userId` varchar(200) NOT NULL,
   `productid` varchar(200) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `img` varchar(100) NOT NULL,
-  `price` varchar(200) NOT NULL,
   `quantity` varchar(200) NOT NULL,
   `totalprice` varchar(200) NOT NULL,
-  `is_bought` tinyint(1) NOT NULL,
   `orderId` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -366,9 +363,8 @@ CREATE TABLE `myapp_mycart` (
 -- Dumping data for table `myapp_mycart`
 --
 
-INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `name`, `img`, `price`, `quantity`, `totalprice`, `is_bought`, `orderId`) VALUES
-(3, '1', '7', 'Samsung Double Door Fridge', 'products/fridge1.jpg', '2', '1', '2', 0, '0'),
-(4, '1', '6', 'Samsung Neo QLED TV', 'products/TV1.jpeg', '2', '1', '2', 0, '0');
+INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `quantity`, `totalprice`, `orderId`) VALUES
+(11, '1', '7', '2', '4', '5');
 
 -- --------------------------------------------------------
 
@@ -379,8 +375,6 @@ INSERT INTO `myapp_mycart` (`id`, `userId`, `productid`, `name`, `img`, `price`,
 CREATE TABLE `myapp_order` (
   `orderDate` datetime(6) NOT NULL,
   `id` bigint(20) NOT NULL,
-  `productid` varchar(200) NOT NULL,
-  `productqty` varchar(200) NOT NULL,
   `userId` varchar(200) NOT NULL,
   `userName` varchar(200) NOT NULL,
   `userEmail` varchar(200) NOT NULL,
@@ -395,9 +389,11 @@ CREATE TABLE `myapp_order` (
 -- Dumping data for table `myapp_order`
 --
 
-INSERT INTO `myapp_order` (`orderDate`, `id`, `productid`, `productqty`, `userId`, `userName`, `userEmail`, `userContact`, `address`, `orderAmount`, `paymentMethod`, `transactionId`) VALUES
-('2023-06-07 06:38:11.622992', 2, '7', '1', '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywZFZpRF9vE8i'),
-('2023-06-07 06:39:46.829300', 3, '7', '1', '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywavkCpEi0ajn');
+INSERT INTO `myapp_order` (`orderDate`, `id`, `userId`, `userName`, `userEmail`, `userContact`, `address`, `orderAmount`, `paymentMethod`, `transactionId`) VALUES
+('2023-06-07 06:38:11.622992', 2, '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywZFZpRF9vE8i'),
+('2023-06-07 06:39:46.829300', 3, '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'jamnagar', 2, 'Razorpay', 'pay_LywavkCpEi0ajn'),
+('2023-06-09 18:31:53.937758', 4, '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'Jamnagar', 4, 'Razorpay', 'pay_LzvnMuLoncJUnV'),
+('2023-06-09 18:44:50.032166', 5, '1', 'Om1230', 'ompatel22072002@gmail.com', 1230, 'Jamnagar', 2, 'Razorpay', 'pay_Lzw16uQadwOnbC');
 
 -- --------------------------------------------------------
 
@@ -423,7 +419,7 @@ CREATE TABLE `myapp_products` (
 INSERT INTO `myapp_products` (`productid`, `productname`, `productimg`, `price`, `productdescription`, `quantity`, `productcategory_id`, `vendorid`) VALUES
 (5, 'Asus TUF F15 Gaming Laptop', 'products/Laptop1.jpg', 2, '11th Gen Intel Core i7 processor\r\n16 GB GDDR4 Ram\r\nNvidia RTX 2070 graphics card(8GB GDDR6 Memory)\r\nUHD 144Hz LED Display', 40, 5, ''),
 (6, 'Samsung Neo QLED TV', 'products/TV1.jpeg', 2, '72 inch Display with 120Hz refresh rate at 8K resolution', 30, 4, ''),
-(7, 'Samsung Double Door Fridge', 'products/fridge1.jpg', 2, 'Glossy Black Double Door fridge\r\nWi-Fi enabled with on door display', 47, 3, '');
+(7, 'Samsung Double Door Fridge', 'products/fridge1.jpg', 2, 'Glossy Black Double Door fridge\r\nWi-Fi enabled with on door display', 43, 3, '');
 
 -- --------------------------------------------------------
 
@@ -436,16 +432,17 @@ CREATE TABLE `myapp_user` (
   `name` varchar(200) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `phone` bigint(20) NOT NULL
+  `phone` bigint(20) NOT NULL,
+  `address` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `myapp_user`
 --
 
-INSERT INTO `myapp_user` (`id`, `name`, `email`, `password`, `phone`) VALUES
-(1, 'Om1230', 'ompatel22072002@gmail.com', 'om1', 1230),
-(3, 'Account1', 'acc@acc.com', 'acc123', 2147483647);
+INSERT INTO `myapp_user` (`id`, `name`, `email`, `password`, `phone`, `address`) VALUES
+(1, 'Om1230', 'ompatel22072002@gmail.com', 'om1', 1230, 'Jamnagar'),
+(3, 'Account1', 'acc@acc.com', 'acc123', 2147483647, 'Jamnagar');
 
 --
 -- Indexes for dumped tables
@@ -617,7 +614,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `myapp_category`
@@ -635,13 +632,13 @@ ALTER TABLE `myapp_feedback`
 -- AUTO_INCREMENT for table `myapp_mycart`
 --
 ALTER TABLE `myapp_mycart`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `myapp_order`
 --
 ALTER TABLE `myapp_order`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `myapp_products`

@@ -1,30 +1,23 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Table</title>
-</head>
-<body>
-    <table border="2px">
-        <tr>
-            <th>Product Name</th>
-            <th>Product Category</th>
-            <th>Product Image</th>
-            <th>Price</th>
-            <th>Product Description</th>
-        </tr>
-        {% for i in data %}
-        <tr>
-            <td>{{i.productname}}</td>
-            <td>{{i.productcategory}}</td>
-            <td><img src="{{i.productimg.url}}" alt="" height="100px" width="100px"></td>
-            <td>{{i.price}}</td>
-            <td>{{i.productdescription}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+{% extends 'NavigationBar.html' %} {% load static %} {% block content %}
+<table border="2px">
+  <tr>
+    <th>Product Name</th>
+    <th>Product Category</th>
+    <th>Product Image</th>
+    <th>Price</th>
+    <th>Product Description</th>
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td>{{i.productname}}</td>
+    <td>{{i.productcategory}}</td>
+    <td>
+      <img src="{{i.productimg.url}}" alt="" height="100px" width="100px" />
+    </td>
+    <td>{{i.price}}</td>
+    <td>{{i.productdescription}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

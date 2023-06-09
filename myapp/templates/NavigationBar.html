@@ -224,7 +224,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Product</a>
             </li>
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -250,13 +250,18 @@
                 <li><a class="dropdown-item" href="#">Laptop</a></li>
                 <li><a class="dropdown-item" href="#">PC Moniter</a></li>
               </ul>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'ContactUs' %}">Contact</a>
             </li>
+            {% if isLoggedIn %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ViewCart' %}">My Cart</a>
+            </li>
+            {% endif %}
           </ul>
           <form class="d-flex" id="search" action="{% url 'SearchProducts' %}" method="get">
             {% csrf_token %}

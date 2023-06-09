@@ -26,4 +26,5 @@ urlpatterns = [
     path('changepasswordotp/',ChangePassowrdUsingOTP,name="passwordchangeotp"),
     path('cart/',ViewCart,name="ViewCart"),
     path('shipping/',Shipping,name="Shipping"),
+    path('orderView/',OrderView,name="OrderView"),
 ]

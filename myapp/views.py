@@ -105,16 +105,20 @@ def OrderView(request):
         orderData=Order.objects.filter(userEmail=sessionData)
         productList=[]
         for i in orderData:
-            productDict={}
-            productData=Products.objects.get(id=i.productid)
-            productDict['name']=productData.productname
-            productDict['img']=productData.productimg
-            productDict['price']=productData.price
-            productDict['quantity']=i.productqty
-            productDict['date']=i.orderDate
-            productDict['transcationid']=i.transactionId
-            productList.append(productDict)
-        return render(request,'orderview.html',{"sessionData":sessionData,"productList":productList})
+            cartData=MyCart.objects.filter(orderId=i.pk)
+            for j in cartData:
+                productDict={}
+                productData=Products.objects.get(productid=j.productid)
+                productDict['name']=productData.productname
+                productDict['img']=productData.productimg
+                productDict['price']=j.totalprice
+                productDict['quantity']=j.quantity
+                productDict['date']=i.orderDate
+                productDict['transcationid']=i.transactionId
+                productList.append(productDict)
+        return render(request,'orderview.html',{"isLoggedIn":1,"productList":productList})
+    else:
+        return HttpResponseBadRequest()
 
 def Profile(request):
     if request.method=='GET':
@@ -160,10 +164,11 @@ def BuyNow(request):
         if request.method=="POST":
             request.session['productid']=request.POST['proid']
             request.session['quantity']="1"
-            request.session['userid']=loggedinuser.pk
+            request.session['userId']=loggedinuser.pk
             request.session['username']=loggedinuser.name
             request.session['userEmail']=loggedinuser.email
             request.session['userContact']=loggedinuser.phone
+            request.session['address']=loggedinuser.address
             productdetails=Products.objects.get(productid=request.POST['proid'])
             request.session['orderAmount']=productdetails.price
             request.session['paymentMethod']="Razorpay"
@@ -194,61 +199,106 @@ def razorpayView(request):
 def paymenthandler(request):
     if request.method == "POST":
         try:
+            print(1)
             payment_id = request.POST.get('razorpay_payment_id', '')
+            print(2)
             razorpay_order_id = request.POST.get('razorpay_order_id', '')
+            print(3)
             signature = request.POST.get('razorpay_signature', '')
+            print(4)
 
             params_dict = {
                 'razorpay_order_id': razorpay_order_id,
                 'razorpay_payment_id': payment_id,
                 'razorpay_signature': signature
             }
+            print(5)
             result=razorpay_client.utility.verify_payment_signature(params_dict)
             
             if result is not None:
+                print(6)
                 amount = int(request.session['orderAmount'])*100
+                print(7)
                 razorpay_client.payment.capture(payment_id,amount)
+                print(8)
 
                 orderTable = Order()
-                orderTable.productid=request.session['productid']
-                orderTable.productqty=request.session['quantity']
-                orderTable.userId = request.session['userid']
+                # print(9)
+                # orderTable.productid=request.session['productid']
+                # print(10)
+                # orderTable.productqty=request.session['quantity']
+                print(11)
+                orderTable.userId = request.session['userId']
+                print(12)
                 orderTable.userName = request.session['username']
+                print(13)
                 orderTable.userEmail = request.session['userEmail']
+                print(14)
                 orderTable.userContact = request.session['userContact']
-                orderTable.address = "jamnagar"
+                print(15)
+                orderTable.address = request.session['address']
+                print(16)
                 orderTable.orderAmount = request.session['orderAmount']
+                print(17)
                 orderTable.paymentMethod = request.session['paymentMethod']
+                print(18)
                 orderTable.transactionId = payment_id
-                productData=Products.objects.get(productid=request.session['productid'])
-                productData.quantity=productData.quantity-int(request.session['quantity'])
-                productData.save()
+                # print(19)
+                # productData=Products.objects.get(productid=request.session['productid'])
+                # print(20)
+                # productData.quantity=productData.quantity-int(request.session['quantity'])
+                # print(21)
+                # productData.save()
+                print(22)
                 orderTable.save()
-                del request.session['productid']
-                del request.session['quantity']
-                del request.session['userid']
+                newOrderData=Order.objects.latest('id')
+                print("Primary key is: ",newOrderData.pk)
+                print(23)
+                myCartdata=MyCart.objects.filter(userId=request.session['userId'])
+                print(24)
+                for i in myCartdata:
+                    print("loop1")
+                    i.orderId=str(newOrderData.pk)
+                    print("loop2")
+                    productData=Products.objects.get(productid=i.productid)
+                    print("loop3")
+                    productData.quantity=productData.quantity-int(i.quantity)
+                    print("loop4")
+                    productData.save()
+                    print("loop5")
+                    i.save()
+                    print("loop6")
+                print("loop end")
+                # del request.session['productid']
+                # del request.session['quantity']
+                del request.session['userId']
                 del request.session['username']
                 del request.session['userEmail']
                 del request.session['userContact']
+                del request.session['address']
                 del request.session['orderAmount']
                 del request.session['paymentMethod']
+                print(24)
                 return redirect('SuccessOrder')
             else:
+                print(25)
                 return HttpResponseBadRequest()
         except:
+            print(26)
             return HttpResponseBadRequest()
     else:
+        print(27)
         return HttpResponseBadRequest()
 
 def OrderSuccess(request):
     if 'email' in request.session:
-        a=request.session['email']
-        return render(request,'order_sucess.html',{'a':a})
+        return render(request,'order_sucess.html',{"isLoggedIn":1})
     else:
         return HttpResponseBadRequest()
 
 def searchProduct(request):
     word=request.GET.get('search')
+    print(word)
     wordset=word.split(" ")
     for i in wordset:
         searchData=Products.objects.filter(Q(productcategory__categoryname__icontains=i)|Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
@@ -314,12 +364,19 @@ def ChangePassowrdUsingOTP(request):
 def AddToCart(request,id):
     if 'email' in request.session:
         if request.method=="POST":
-            productData=Products.objects.get(productid=int(id))
-            userData=User.objects.get(email=request.session['email'])
             qty=1
-            addToCartData=MyCart(userId=userData.pk,productid=productData.productid,quantity=qty,totalprice=qty*productData.price,orderId="0")
-            addToCartData.save()
-            return redirect('ViewCart')
+            productData=Products.objects.get(productid=int(id))
+            myCartData=MyCart.objects.get(productid=int(id))
+            if myCartData:
+                newQuantity=int(myCartData.quantity)+int(qty)
+                newPrice=productData.price*newQuantity
+                MyCart.objects.filter(productid=int(id)).update(quantity=newQuantity,totalprice=newPrice)
+                return redirect('ViewCart')
+            else:
+                userData=User.objects.get(email=request.session['email'])
+                addToCartData=MyCart(userId=userData.pk,productid=productData.productid,quantity=qty,totalprice=qty*productData.price,orderId="0")
+                addToCartData.save()
+                return redirect('ViewCart')
     else:
         return render(request,'Login.html',{"isLoggedIn":0})
 
@@ -345,9 +402,6 @@ def ViewCart(request):
         return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItems":len(productList),"isLoggedIn":1})
     return render(request,'Cart.html',{"isLoggedIn":0})
 
-def shipping(request):
-    # <a class="btn btn-primary btn-lg" href="{% url 'shiping' %}">Check out<a>
-    return 0
 
 def RemoveSingleItem(request,id):
     if 'email' in request.session:
@@ -359,8 +413,8 @@ def RemoveSingleItem(request,id):
 
 def Shipping(request):
     if 'email' in request.session:
-        userdata=UserRegister.objects.get(email=request.session['email'])
-        cartdata=Cartmodel.objects.filter(userId=userdata.pk,orderId="0")
+        userdata=User.objects.get(email=request.session['email'])
+        cartdata=MyCart.objects.filter(userId=userdata.pk,orderId="0")
         finaltotal=0
         for i in cartdata:
             finaltotal+=int(i.totalprice)
@@ -376,7 +430,7 @@ def Shipping(request):
             request.session['paymentMethod']="Razorpay"
             request.session['transactionId']=""
             return redirect('razorpayView')
-        return render(request,'shiping.html',{'finalorder':finaltotal,'user':userdata})
+        return render(request,'Shipping.html',{'finalorder':finaltotal,'user':userdata})
     else:
         return redirect('login1')
 
