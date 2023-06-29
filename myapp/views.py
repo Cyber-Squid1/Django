@@ -9,16 +9,14 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def table(request):
-    # data=User.objects.all()
-    # print(data)
-    # return render(request,'table.html',{"data":data})
     data=User.objects.filter(phone=7016104220)
-    print(data)
     return render(request,'table.html',{"data":data})
 
 def SignIn(request):
     if request.method=="POST":
-        name1=request.POST['name']
+        fn=request.POST['fname']
+        ln=request.POST['lname']
+        name1=str(fn)+" "+str(ln)
         email1=request.POST['email']
         password1=request.POST['pswd']
         phone1=request.POST['phone']
@@ -121,40 +119,44 @@ def OrderView(request):
         return HttpResponseBadRequest()
 
 def Profile(request):
-    if request.method=='GET':
+    if 'email' in request.session:
+        if request.method=='POST':
+            fn=request.POST['firstname']
+            ln=request.POST['lastname']
+            name1=str(fn)+" "+str(ln)
+            newPhone=request.POST['mob']
+            add1=request.POST['address']
+            User.objects.filter(email=request.session['email']).update(name=name1,phone=newPhone,address=add1)
+            return redirect('Profile')
         userdata=User.objects.get(email=request.session['email'])
-        return render(request,'profile.html',{"userdata":userdata,"isLoggedIn":1})
+        nameList=str(userdata.name).split(" ")
+        return render(request,'profile.html',{"userdata":userdata,"isLoggedIn":1,"fname":nameList[0],"lname":nameList[1]})
 
-def EditProfile(request):
-    userdata=User.objects.get(email=request.session['email'])
-    if request.method=='POST':
-        newname=request.POST['name']
-        newPhone=request.POST['phone']
-        User.objects.filter(email=request.session['email']).update(name=newname,phone=newPhone)
-        userdata=User.objects.get(email=request.session['email'])
-        return render(request,'profile.html',{"message":"Account Details have been updated successfully","userdata":userdata,"isLoggedIn":1})
-    return render(request,'EditProfile.html',{"userdata":userdata,"isLoggedIn":1})
-    
-   
+def AddProfileImage(request):
+    return redirect('Profile')
+# def EditProfile(request):
+#     userdata=User.objects.get(email=request.session['email'])
+#     if request.method=='POST':
+#         newname=request.POST['name']
+#         newPhone=request.POST['phone']
+#         User.objects.filter(email=request.session['email']).update(name=newname,phone=newPhone)
+#         userdata=User.objects.get(email=request.session['email'])
+#         return render(request,'profile.html',{"message":"Account Details have been updated successfully","userdata":userdata,"isLoggedIn":1})
+#     return render(request,'EditProfile.html',{"userdata":userdata,"isLoggedIn":1})
+
 def ChangePassword(request):
     if 'email' in request.session.keys():
         if request.method=="POST":
             oldpass1=request.POST['oldpass']
-            print("Old:",oldpass1)
             dbdata=User.objects.get(email=request.session['email'])
-            print("DB:",dbdata.password)
             if oldpass1 == dbdata.password:
                 newpass1=request.POST['newpass']
-                print("New: ",newpass1)
                 User.objects.filter(email=request.session['email']).update(password=newpass1)
-                print("Success")
                 Logout(request)
                 return redirect('Login')
             else:
-                print("Failed1")
                 return render(request,'ChangePass.html',{"isLoggedIn":1})
     else:
-        print("Failed2")
         return render(request,'ChangePass.html',{"isLoggedIn":1})
     return render(request,'ChangePass.html',{"isLoggedIn":1})
 
@@ -298,7 +300,6 @@ def OrderSuccess(request):
 
 def searchProduct(request):
     word=request.GET.get('search')
-    print(word)
     wordset=word.split(" ")
     for i in wordset:
         searchData=Products.objects.filter(Q(productcategory__categoryname__icontains=i)|Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
@@ -317,7 +318,6 @@ def ForgotPassword(request):
                         otp+=str(random.randint(0,9))
                     return otp
                 onetimepass=generate()
-                print(onetimepass)
                 request.session['otp']=onetimepass
                 send_mail(
                 "Forgot Password",
@@ -398,7 +398,6 @@ def ViewCart(request):
             productDict['quantity']=i.quantity
             productDict['total']=i.totalprice
             productList.append(productDict)
-        print(productList)
         return render(request,'Cart.html',{"productList":productList,"finalTotal":finalTotal,"numItems":len(productList),"isLoggedIn":1})
     return render(request,'Cart.html',{"isLoggedIn":0})
 

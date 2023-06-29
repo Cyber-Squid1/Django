@@ -8,7 +8,7 @@ admin.site.register(Category)
 admin.site.register(MyCart)
 
 class FeedbackRegister(admin.ModelAdmin):
-    list_display = ('email','phonenumber','message')
+    list_display = ['email','phonenumber','message']
 admin.site.register(Feedback,FeedbackRegister)
 
 class ProductRegister(admin.ModelAdmin):

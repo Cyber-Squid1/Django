@@ -1,6 +1,4 @@
-{% extends 'NavigationBar.html' %} 
-{% block content %} 
-{% load static %}
+{% extends 'NavigationBar.html' %} {% block content %} {% load static %}
 
 <div class="container" id="login">
   <div class="row">
@@ -12,10 +10,11 @@
       <form action="{% url 'Signin' %}" method="post">
         {% csrf_token %}
         <div class="input2 text-center">
-          <input type="name" placeholder="Enter Name" name="name" />
-          <input type="number" placeholder="Enter Phone Number" name="phone" />
-          <input type="email" placeholder="Enter Email" name="email" />
-          <input type="password" placeholder="Enter Password" name="pswd" />
+          <input type="name" placeholder="Enter First Name" name="fname" required/>
+          <input type="name" placeholder="Enter Last Name" name="lname" required/>
+          <input type="number" placeholder="Enter Phone Number" name="phone" required/>
+          <input type="email" placeholder="Enter Email" name="email" required/>
+          <input type="password" placeholder="Enter Password" name="pswd" required/>
         </div>
         <p class="text-center" id="btnlogin">
           <!-- <a href="#">SIGN UP</a> -->
@@ -38,27 +37,26 @@
         </p>
       </form>
       <br style="height: 10px;">
-      <p class="text-center">Already Have an account</p>
-          <p class="text-center">
-            <button
-              style="
-                padding: 10px;
-                text-decoration: none;
-                border-radius: 15px;
-                background-color: #ffc800;
-                color: white;
-                font-weight: bold;
-                border: none;
-                text-shadow: 0px 0px 1px black;
-              "
-            >
-              <a
-                href="{% url 'Login'%}"
-                style="color: white; text-decoration: none"
-                >Log In</a
-              >
-            </button>
-          </p>
+      <!-- <p class="text-center">Already Have an account?</p> -->
+      <p class="text-center">
+        <button
+          style="
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 15px;
+            background-color: #ffc800;
+            color: white;
+            font-weight: bold;
+            border: none;
+            text-shadow: 0px 0px 1px black;
+            font-size: 10px;
+          "
+        >
+          <a href="{% url 'Login'%}" style="color: black; text-decoration: none"
+            >Already Have an account?</a
+          >
+        </button>
+      </p>
     </div>
   </div>
 </div>

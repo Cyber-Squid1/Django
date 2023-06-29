@@ -15,22 +15,30 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <div>
+            <table class="table table-dark mt-5">
+                <tr>
+                    <td rowspan="5"><img src="{{SingleProductdata.productimg.url}}" alt="" height="200px" width="200px"></td>
+                    <tr><td>Name: {{SingleProductdata.productname}}</td></tr>
+                    <tr><td>Category: {{SingleProductdata.productcategory}}</td></tr>
+                    <tr><td>Price: {{SingleProductdata.price}}</td></tr>
+                    <tr><td>Description: {{SingleProductdata.productdescription}}</td></tr>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <input type="text" name="quantity" id="" hidden>
+    <div class="container">
+        <p>Select Quantity</p>
+    </div>
     <div class="main">
-        <table>
-            <tr>
-                <td rowspan="5"><img src="{{SingleProductdata.productimg.url}}" alt="" height="200px" width="200px"></td>
-                <tr><td>Name: {{SingleProductdata.productname}}</td></tr>
-                <tr><td>Category: {{SingleProductdata.productcategory}}</td></tr>
-                <tr><td>Price: {{SingleProductdata.price}}</td></tr>
-                <tr><td>Description: {{SingleProductdata.productdescription}}</td></tr>
-            </tr>
-        </table>
-        <form action="{% url 'BuyProduct' %}" method="post">
+        <form action="{% url 'BuyProduct' %}" method="post" class="m-5">
             {% csrf_token %}
             <input type="hidden" value="{{SingleProductdata.productid}}" name="proid">
             <button type="submit">Buy Now</button>
         </form>
-        <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post">  <!--SingleProductdata.productid-->
+        <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post" class="m-5">  <!--SingleProductdata.productid-->
             {% csrf_token %}
             <button type="submit">Add To cart</button>
         </form>

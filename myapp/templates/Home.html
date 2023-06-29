@@ -1,6 +1,4 @@
-{% extends 'NavigationBar.html' %} 
-{% block content %}
-{% load static%}
+{% extends 'NavigationBar.html' %} {% block content %} {% load static%}
 <!-- home content -->
 <section class="home">
   <div class="content">
@@ -25,14 +23,40 @@
 
 <div class="container" id="product-cards">
   <h1 class="text-center">PRODUCTS</h1>
+</div>
+<div class="container" style="display: flex;">
   {% for i in categorydata %}
-  <div class="row" style="margin-top: 30px;">
-    <div class="col-md-3 py-3 py-md-0">
-      <div class="card">
-        <a href="{% url 'productfilter' i.id %}" style="text-decoration: none;">
-          <img src="{{i.img.url}}" alt="" height="259px" width="259px">
+  <div class="m-5" style="width: auto;">
+    <div class="row py-3 py-md-0">
+      <div class="card row">
+        <a href="{% url 'productfilter' i.id %}" style="text-decoration: none">
+          <img src="{{i.img.url}}" alt="" height="259px" width="259px" />
           <div class="card-body">
             <h3 class="text-center">{{i.categoryname}}</h3>
+            <div class="star text-center">
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="container" style="display: flex;">
+  {% for x in categorydata %}
+  <div class="m-5" style="width: auto;">
+    <div class="row py-3 py-md-0">
+      <div class="card row">
+        <a href="{% url 'productfilter' x.id %}" style="text-decoration: none">
+          <img src="{{x.img.url}}" alt="" height="259px" width="259px" style="align-self: center;"/>
+          <div class="card-body">
+            <h3 class="text-center">{{x.categoryname}}</h3>
             <div class="star text-center">
               <i class="fa-solid fa-star checked"></i>
               <i class="fa-solid fa-star checked"></i>
