@@ -28,4 +28,10 @@ urlpatterns = [
     path('cart/',ViewCart,name="ViewCart"),
     path('shipping/',Shipping,name="Shipping"),
     path('orderView/',OrderView,name="OrderView"),
+    path('VendorSignUp/',VendorSignUp,name="VendorSignUp"),
+    path('vendorLogin/',VendorLogin,name="VendorLogin"),
+    path('addProduct/',VendorAddProduct,name='VendorAddProduct'),
+    path('vendorDashboard/',VendorDashboard,name='VendorDashboard'),
+    path('stock/',VendorViewStock,name='ViewStock'),
+    path('vendorLogout/',VendorLogout,name='VendorLogout')
 ]

@@ -1,23 +1,26 @@
-{% extends 'NavigationBar.html' %} {% load static %} {% block content %}
-<table border="2px">
-  <tr>
-    <th>Product Name</th>
-    <th>Product Category</th>
-    <th>Product Image</th>
-    <th>Price</th>
-    <th>Product Description</th>
-  </tr>
+{% extends 'NavigationBar.html' %} {% block content %}
+<div class="container" style="display: flex;">
   {% for i in data %}
-  <tr>
-    <td>{{i.productname}}</td>
-    <td>{{i.productcategory}}</td>
-    <td>
-      <img src="{{i.productimg.url}}" alt="" height="100px" width="100px" />
-    </td>
-    <td>{{i.price}}</td>
-    <td>{{i.productdescription}}</td>
-  </tr>
+  <div class="m-5" style="width: 200px; height: 200px;">
+    <div class="row py-3 py-md-0">
+      <div class="card row" style="background-color: rgb(195, 194, 194);">
+        <a href="{% url 'productget' i.productid %}" style="text-decoration: none">
+          <img src="{{i.productimg.url}}" alt="" height="100px" width="100px" style="align-self: center;"/>
+          <div class="card-body">
+            <h6 class="text-center" style="color: black;">{{i.productname}}</h6>
+            <div class="star text-center">
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+              <i class="fa-solid fa-star checked"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
   {% endfor %}
-</table>
+</div>
 
 {% endblock %}

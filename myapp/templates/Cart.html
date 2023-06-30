@@ -82,8 +82,10 @@
   </div>
 </section>
 {% else %}
-
-<h1><a href="{% url 'Home' %}">Go For Shoping</a></h1>
+<div class="text-center m-4">
+  <p>Your cart is empty</p>
+  <h2><a href="{% url 'Home' %}" style="text-decoration: none;">Go For Shopping</a></h2>
+</div>
 
 {% endif %} {% if message %}
 <script>

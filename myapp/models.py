@@ -59,3 +59,10 @@ class MyCart(models.Model):
     totalprice=models.CharField(max_length=200)
     # is_bought=models.BooleanField()
     orderId=models.CharField(max_length=200,default="0")
+
+class VendorRegister(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    password = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    phone = models.IntegerField()

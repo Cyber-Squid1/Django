@@ -1,11 +1,14 @@
 {% extends 'NavigationBar.html' %}
-{% block content %}
+{% block content %} 
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> -->
     <title>Product Table</title>
     <style>
         .main{
@@ -28,21 +31,40 @@
             </table>
         </div>
     </div>
-    <input type="text" name="quantity" id="" hidden>
-    <div class="container">
-        <p>Select Quantity</p>
-    </div>
-    <div class="main">
-        <form action="{% url 'BuyProduct' %}" method="post" class="m-5">
-            {% csrf_token %}
-            <input type="hidden" value="{{SingleProductdata.productid}}" name="proid">
-            <button type="submit">Buy Now</button>
-        </form>
-        <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post" class="m-5">  <!--SingleProductdata.productid-->
-            {% csrf_token %}
-            <button type="submit">Add To cart</button>
-        </form>
-    </div>
+        <input type="text" name="quantity" id="" hidden>
+        <div class="container" style="display: flex;">
+            <p style="margin-bottom: 0px;">Select Quantity: </p> <select name="" id="qty">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </div>
+        <div class="main">
+            <form action="{% url 'BuyProduct' %}" method="post">
+                {% csrf_token %}
+                <input type="text" value="{{SingleProductdata.productid}}" name="proid" hidden>
+                <input type="text" name="quantity" id="qu" hidden>
+                <button class="p-2 m-4" type="submit">Buy Now</button>
+            </form>
+            <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post">
+                {% csrf_token %}
+                <!-- <input type="hidden" value="{{SingleProductdata.productid}}" name="proid"> -->
+                <input type="text" name="quantity" id="qu1" hidden>
+                <button class="p-2 m-4" type="submit">Add To cart <img src="{% static '/images/cart.svg' %}" alt="" height="17px" width="17px"></button>
+            </form>
+        </div>
+    <script async>
+        document.getElementById('qty').addEventListener("click",()=>{
+            x=document.getElementById('qty').value[0]
+            document.getElementById('qu').setAttribute("value",x)
+            document.getElementById('qu1').setAttribute("value",x)
+        })
+    </script>
 </body>
 </html>
 {% endblock %}

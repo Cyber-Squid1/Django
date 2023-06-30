@@ -94,8 +94,11 @@ def CategoryWiseProduct(request,id):
     return render(request,'CategoryWise.html',{"categoryWiseData":categoryWiseData})
 
 def SingleProduct(request,id):
-    SingleProductdata=Products.objects.get(productid=id)
-    return render(request,'productget.html',{"SingleProductdata":SingleProductdata})
+    if 'email' in request.session:
+        SingleProductdata=Products.objects.get(productid=id)
+        return render(request,'productget.html',{"SingleProductdata":SingleProductdata,"isLoggedIn":1})
+    else:
+        return redirect('Login')
 
 def OrderView(request):
     if 'email' in request.session:
@@ -302,7 +305,7 @@ def searchProduct(request):
     word=request.GET.get('search')
     wordset=word.split(" ")
     for i in wordset:
-        searchData=Products.objects.filter(Q(productcategory__categoryname__icontains=i)|Q(productname__icontains=i)|Q(price__icontains=i)).distinct()
+        searchData=Products.objects.filter(Q(productname__icontains=i)|Q(price__icontains=i)).distinct() # Q(productcategory__categoryname__icontains=i)|
         return render(request,'product_table.html',{"data":searchData,"s":word})
 
 
@@ -364,17 +367,18 @@ def ChangePassowrdUsingOTP(request):
 def AddToCart(request,id):
     if 'email' in request.session:
         if request.method=="POST":
-            qty=1
+            qty=request.POST['quantity']
+            print("Oty: ",qty)
             productData=Products.objects.get(productid=int(id))
-            myCartData=MyCart.objects.get(productid=int(id))
-            if myCartData:
+            try:
+                myCartData=MyCart.objects.get(productid=int(id))
                 newQuantity=int(myCartData.quantity)+int(qty)
                 newPrice=productData.price*newQuantity
                 MyCart.objects.filter(productid=int(id)).update(quantity=newQuantity,totalprice=newPrice)
                 return redirect('ViewCart')
-            else:
+            except:
                 userData=User.objects.get(email=request.session['email'])
-                addToCartData=MyCart(userId=userData.pk,productid=productData.productid,quantity=qty,totalprice=qty*productData.price,orderId="0")
+                addToCartData=MyCart(userId=userData.pk,productid=productData.productid,quantity=qty,totalprice=int(qty)*int(productData.price),orderId="0")
                 addToCartData.save()
                 return redirect('ViewCart')
     else:
@@ -438,6 +442,58 @@ def RemoveAllItems(request):
         userData=User.objects.get(email=request.session['email'])
         data=MyCart.objects.filter(userId=userData.pk ,orderId="0")
         data.delete()
-        return redirect('Cart')
+        return redirect('ViewCart')
     else:
         return redirect('Login')
+
+def VendorLogin(request):
+    if request.method=="POST":
+        email1=request.POST['email']
+        password1=request.POST['pswd']
+        try:
+            data=VendorRegister.objects.get(email=email1,password=password1)
+            if data:
+                request.session['vendorEmail']=data.email
+                print("Session id:",request.session['vendorEmail'])
+                return redirect('VendorDashboard')
+            else:
+                return render(request,'vendorogin.html',{'message':'Please enter valid credentials.'})
+        except :
+            return render(request,'vendorogin.html',{"message":'Please enter valid credentials.'})
+    return render(request,'vendorlogin.html')
+
+def VendorSignUp(request):
+    if request.method=="POST":
+        fn=request.POST['fname']
+        ln=request.POST['lname']
+        name1=str(fn)+" "+str(ln)
+        email1=request.POST['email']
+        password1=request.POST['pswd']
+        phone1=request.POST['phone']
+        check=VendorRegister.objects.filter(email=email1)
+        if check:
+            return render(request,'VendorSignUp.html',{'messagesignin':"User already exists with this email"})
+        else:
+            data=VendorRegister(name=name1,email=email1,password=password1,phone=phone1)
+            data.save()
+            return redirect('VendorLogin')
+    return render(request,'vendorsignup.html')
+
+def VendorAddProduct(request):
+    return render(request,'vendoraddproduct.html')
+
+def VendorViewStock(request):
+    return render(request,'VendorViewStock.html')
+
+def VendorDashboard(request):
+    if 'vendorEmail' in request.session:
+        return render(request,'vendordashboard.html',{"vendorLoggedIn":1})
+    else:
+        return redirect('VendorLogin')
+
+def VendorLogout(request):
+    if 'vendorEmail' in request.session.keys():
+        del request.session['vendorEmail']
+        return redirect('VendorLogin')
+    else:
+        return redirect('VendorLogin')

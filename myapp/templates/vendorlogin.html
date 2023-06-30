@@ -1,0 +1,70 @@
+{% extends 'vendorNavBar.html' %} {% block content %} {% load static %}
+
+<div class="container" id="login">
+  <div class="row">
+    <div class="col-md-5 py-3 py-md-0" id="side1">
+      <h3 class="text-center">Welcome Back!</h3>
+    </div>
+    <div class="col-md-7 py-3 py-md-0" id="side2">
+      <h3 class="text-center">Vendor login</h3>
+      <br />
+      <form action="{% url 'VendorLogin' %}" method="post">
+        {% csrf_token %}
+        <div class="input2 text-center">
+          <input type="email" name="email" id="" placeholder="Enter Email" />
+          <!-- <input type="name" placeholder="User Name" /> -->
+          <input type="password" name="pswd" placeholder="Enter Password" />
+        </div>
+        <p class="text-center">
+          <a
+            class="text-start"
+            href="{% url 'Forgotpassword' %}"
+            style="font-size: 12px; margin-right: 120px; text-decoration: none;"
+            >Forgot Password?</a
+          >
+          <button
+            id="loginBtn"
+            type="submit"
+            style="
+              padding: 10px;
+              text-decoration: none;
+              border-radius: 15px;
+              background-color: #ffc800;
+              color: white;
+              font-weight: bold;
+              border: none;
+              text-shadow: 0px 0px 1px black;
+            "
+          >
+            Log In
+          </button>
+        </p>
+      </form>
+      <p class="text-start" style="padding-left: 80px; font-size: 12px"></p>
+      <br />
+      <p class="text-center">Don't Have an account</p>
+      <p class="text-center">
+        <button
+          style="
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 15px;
+            background-color: #ffc800;
+            color: white;
+            font-weight: bold;
+            border: none;
+            text-shadow: 0px 0px 1px black;
+          "
+        >
+          <a
+            href="{% url 'VendorSignUp'%}"
+            style="color: white; text-decoration: none"
+            >Create Account</a
+          >
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
