@@ -1,91 +1,139 @@
-{% extends 'NavigationBar.html' %}
-
-{% block content %}
-
-{% load static %}
+{% extends 'vendorNavBar.html' %} {% block content %} {% load static %}
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
 -->
 <!DOCTYPE html>
 <html lang="zxx">
-
-<head>
-    <title> add Product form </title>
+  <head>
+    <title>add Product form</title>
 
     <!-- Meta tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <!-- Google fonts -->
-    <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+    <link
+      href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %} " type="text/css" media="all" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %} "
+      type="text/css"
+      media="all"
+    />
+  </head>
 
-</head>
-
-<body>
-    <div class="w3l-loginblock signinform">
-        <div class="logo">
-            <a class="brand-logo" href="index.html"> Add Product form</a>
-        </div>
-        <!-- main content -->
-            <div class="row map-content-9">
-                <div class="info-grids">
-                    <form  method="post" class="" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-grid">
-                            <div class="input-field">
-                                <label> Category </label>
-                                {% comment %} <input type="text" name="name" id="email" placeholder="Username" required=""> {% endcomment %}
-                                <select name="category" id="email">
-                                    {% for i in categorydata %}
-                                    <option value="{{i.id}}" selected="selected">{{i.categoryname}}</option>
-                                    {% endfor %}
-                                </select>
-                                
-                            </div>
-
-                            <div class="input-field">
-                                <label>  Product Name </label>
-                                <input type="text" name="name" id="email" placeholder=" Product Name" required="">
-                            </div>
-                            <div class="input-field">
-                                <label> Product Image </label>
-                                <input type="file" name="file" id="email" placeholder="File" required="">
-                            </div>
-                            <div class="input-field">
-                                <label> Product Qantity </label>
-                                <input type="text" name="Qantity" id="email" placeholder="Qantity" required="">
-                            </div>
-                            <div class="input-field">
-                                <label> Product Price</label>
-                                <input type="number" name="Price" id="Password" placeholder="Product Price" required="">
-                            </div>
-                            <div class="input-field">
-                                <label> Product Description</label>
-                                <input type="text" name="Description" id="Password" placeholder=" Product Description" required="">
-                            </div>
-                        </div>
-                     
-                        <button type="submit" class="btn btn-primary btn-style">Submit now</button>
-                       
-                    </form>
-                </div>
-                {% if message %}<script>alert("{{message}}")</script>{% endif %}
-                
+  <body>
+    <div class="flex-row" style="width: 50%; margin: auto; border: 1px solid black; box-shadow: 4px 4px; margin-top: 10px;">
+      <div class="heading text-center" style="background-color: azure">
+        <h2 style="margin-bottom: 0px;">Add product</h2>
+      </div>
+      <div
+        class="main flex-row justify-content-start"
+        style="background-color: rgb(157, 157, 217); padding-top: 0px; justify-content: center;"
+      >
+        <form method="post" class="" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-grid" style="padding: 12px">
+            <div
+              class="input-field"
+              style="margin-bottom: 24px; margin-left: 24px; margin-right: 24px"
+            >
+              <label> Category: </label>
+              {% comment %}
+              <input
+                type="text"
+                name="name"
+                id="email"
+                placeholder="Username"
+                required=""
+              />
+              {% endcomment %}
+              <select name="category" id="email">
+                {% for i in productCategoryList %}
+                <option value="{{i.categoryId}}" selected="selected">
+                  {{i.categoryName}}
+                </option>
+                {% endfor %}
+              </select>
             </div>
-        <!-- //main content -->
-        
+
+            <div class="input-field m-4">
+              <label> Product Name: </label>
+              <input
+                type="text"
+                name="name"
+                id="email"
+                placeholder=" Product Name"
+                required
+              />
+            </div>
+            <div class="input-field m-4">
+              <label> Product Image: </label>
+              <input
+                type="file"
+                name="file"
+                id="email"
+                placeholder="File"
+                required
+              />
+            </div>
+            <div class="input-field m-4">
+              <label> Product Quantity: </label>
+              <input
+                type="text"
+                name="Quantity"
+                id="email"
+                placeholder="Quantity"
+                required
+              />
+            </div>
+            <div class="input-field m-4">
+              <label> Product Price:</label>
+              <input
+                type="number"
+                name="Price"
+                id="Password"
+                placeholder="Product Price"
+                required
+              />
+            </div>
+            <div class="input-field m-4">
+              <label> Product Description: </label>
+              <input
+                type="text"
+                name="Description"
+                id="Password"
+                placeholder=" Product Description"
+                required
+              />
+            </div>
+            <div style="width: 50%;margin: auto; display: flex; justify-content: center;">
+              <button
+                type="submit"
+                class="btn btn-primary btn-style"
+              >
+                Submit now
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+    {% if message %}
+    <script>
+      alert("{{message}}");
+    </script>
+    {% endif %}
 
     <!-- fontawesome v5-->
     <script src="{% static 'js/fontawesome.js' %} "></script>
-
-</body>
-
+  </body>
 </html>
 
 {% endblock %}

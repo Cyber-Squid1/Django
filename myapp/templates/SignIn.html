@@ -10,11 +10,31 @@
       <form action="{% url 'Signin' %}" method="post">
         {% csrf_token %}
         <div class="input2 text-center">
-          <input type="name" placeholder="Enter First Name" name="fname" required/>
-          <input type="name" placeholder="Enter Last Name" name="lname" required/>
-          <input type="number" placeholder="Enter Phone Number" name="phone" required/>
-          <input type="email" placeholder="Enter Email" name="email" required/>
-          <input type="password" placeholder="Enter Password" name="pswd" required/>
+          <input
+            type="name"
+            placeholder="Enter First Name"
+            name="fname"
+            required
+          />
+          <input
+            type="name"
+            placeholder="Enter Last Name"
+            name="lname"
+            required
+          />
+          <input
+            type="number"
+            placeholder="Enter Phone Number"
+            name="phone"
+            required
+          />
+          <input type="email" placeholder="Enter Email" name="email" required />
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="pswd"
+            required
+          />
         </div>
         <p class="text-center" id="btnlogin">
           <button
@@ -35,7 +55,7 @@
           </button>
         </p>
       </form>
-      <br style="height: 10px;">
+      <br style="height: 10px" />
       <p class="text-center">
         <button
           style="
@@ -70,17 +90,6 @@
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Usefull Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policey</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Services</h4>
 
           <ul>
@@ -91,7 +100,13 @@
             <li><a href="#">Gaming Gadget</a></li>
           </ul>
         </div>
-
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Become a vendor</h4>
+          <ul>
+            <li><a href="#">Vendor Login</a></li>
+            <li><a href="#">Vendor Register</a></li>
+          </ul>
+        </div>
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Social Networks</h4>
           <p>

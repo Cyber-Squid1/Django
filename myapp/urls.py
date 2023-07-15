@@ -33,5 +33,6 @@ urlpatterns = [
     path('addProduct/',VendorAddProduct,name='VendorAddProduct'),
     path('vendorDashboard/',VendorDashboard,name='VendorDashboard'),
     path('stock/',VendorViewStock,name='ViewStock'),
-    path('vendorLogout/',VendorLogout,name='VendorLogout')
+    path('vendorLogout/',VendorLogout,name='VendorLogout'),
+    path('vendorProfile/',VendorProfile,name='VendorProfile'),
 ]

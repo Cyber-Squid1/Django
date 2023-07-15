@@ -480,7 +480,21 @@ def VendorSignUp(request):
     return render(request,'vendorsignup.html')
 
 def VendorAddProduct(request):
-    return render(request,'vendoraddproduct.html')
+    if 'vendorEmail' in request.session:
+        vendorData=VendorRegister.objects.get(email=request.session['vendorEmail'])
+        temp=Products.objects.filter(vendorid=vendorData.pk)
+        productCategoryList=[]
+        for i in temp:
+            categoryDict={}
+            categoryDict['categoryId']=i.productcategory.pk
+            categoryDict['categoryName']=i.productcategory.categoryname
+            if categoryDict in productCategoryList:
+                continue
+            else:
+                productCategoryList.append(categoryDict)
+        return render(request,'vendoraddproduct.html',{"vendorLoggedIn":1,"productCategoryList":productCategoryList})
+    else:
+        return redirect('VendorLogin')
 
 def VendorViewStock(request):
     return render(request,'VendorViewStock.html')
@@ -497,3 +511,6 @@ def VendorLogout(request):
         return redirect('VendorLogin')
     else:
         return redirect('VendorLogin')
+
+def VendorProfile(request):
+    return render(request,"vendorProfile.html")

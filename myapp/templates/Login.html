@@ -19,7 +19,7 @@
           <a
             class="text-start"
             href="{% url 'Forgotpassword' %}"
-            style="font-size: 12px; margin-right: 120px; text-decoration: none;"
+            style="font-size: 12px; margin-right: 120px; text-decoration: none"
             >Forgot Password?</a
           >
           <button
@@ -76,18 +76,6 @@
           <strong>Phone:</strong> +91 7015207360 <br />
           <strong>Email:</strong> electronic@eshop.com <br />
         </div>
-
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Usefull Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="{% url 'VendorLogin' %}">Vendor Dashboard</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policey</a></li>
-          </ul>
-        </div>
-
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Services</h4>
 
@@ -99,7 +87,13 @@
             <li><a href="#">Gaming Gadget</a></li>
           </ul>
         </div>
-
+        <div class="col-lg-3 col-md-6 footer-links">
+          <h4>Become a vendor</h4>
+          <ul>
+            <li><a href="{% url 'VendorLogin' %}">Vendor Login</a></li>
+            <li><a href="{% url 'VendorSignUp'%}">Vendor Register</a></li>
+          </ul>
+        </div>
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Our Social Networks</h4>
           <p>
