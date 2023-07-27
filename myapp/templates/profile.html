@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"
@@ -72,7 +73,57 @@
         opacity:.7;
 
       }
-    </style>
+      ::-webkit-file-upload-button{
+        border: 2px solid black;
+        border-radius: 50%;
+        background-color: aqua;
+      }
+      .profile-pic {
+				color: transparent;
+				transition: all 0.3s ease;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+			}
+ 			.profile-pic input {
+				 display: none;
+			}			
+			.profile-pic img {
+				 position: absolute;
+				 object-fit: cover;
+				 width: 165px;
+				 height: 165px;
+				 box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+				 border-radius: 100px;
+				 z-index: 0;
+			}
+ 			.profile-pic .-label {
+				 cursor: pointer;
+				 height: 165px;
+				 width: 165px;
+			}			
+ 			.profile-pic:hover .-label {
+				 display: flex;
+				 justify-content: center;
+				 align-items: center;
+				 background-color: rgba(0, 0, 0, .8);
+				 z-index: 10000;
+				 color: #fafafa;
+				 transition: background-color 0.2s ease-in-out;
+				 border-radius: 100px;
+				 margin-bottom: 0;
+			}			
+ 			.profile-pic span {
+				display: inline-flex;
+				padding: 0.2em;
+				height: 2em;
+			}
+			body a:hover {
+				 text-decoration: none;
+			}
+ 
+	</style>
   </head>
   <body>
     <div class="main" style="background-color: rgb(254, 238, 219);margin: 5px;">
@@ -81,26 +132,24 @@
           <div
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
-          {% if userdata.img %}
-            <img
-              class="rounded-circle mt-5"
-              width="150px"
-              src="{userdata.img.url}"
-            />
-          {% else %}
-          <form action="{% url 'AddProfileImage' %}" method="post">
-            {% csrf_token %}
-            <input class="rounded-circle mt-5" id="uploadImage" type="image" src="../static/manProfile.jpg" alt="button" width="150px">
-          <!-- <img
-              id="uploadImage"
-              class="rounded-circle mt-5"
-              width="150px"
-              src="../static/manProfile.jpg"
-            /> -->
-          </form>
-            {% endif %}
-            <span class="font-weight-bold">{{userdata.name}}</span
-            ><span> </span>
+					<form action="{% url 'AddProfileImage'%}" method="post">
+						{% csrf_token %}
+						<div class="profile-pic">
+          	  <label class="-label" for="file">
+          	    <span class="glyphicon glyphicon-camera"></span>
+          	    <span>Change Image</span>
+          	  </label>
+          	  <input id="file" type="file" onchange="loadFile(event)"/>
+							{% if userdata.profileimg %}
+          	  <img src="{{userdata.profileimg.url}}" id="output" width="150px" />
+							{% else %}
+          	  <img src="../static/manProfile.jpg" id="output" width="150px" />
+							{% endif %}
+          	</div>
+						<input type="text" name="imageUrl" id="imgUrl">
+						<button type="submit">Update Profile Image</button>
+            <!-- <span class="font-weight-bold">{{userdata.name}}</span> -->
+					</form>
           </div>
         </div>
         <div class="col-md-5">
@@ -179,4 +228,47 @@
   </body>
 </html>
 
+
+<!-- <script async>
+  let x=document.getElementById('uploadImage')
+  x.addEventListener("mouseenter",()=>{
+    x.setAttribute("src","../static/plus.jpg")
+  })
+  x.addEventListener("mouseleave",()=>{
+    x.setAttribute("src","{userdata.img.url}")
+  })
+</script>
+
+
+<script async>
+  let x=document.getElementById('uploadImage')
+  x.addEventListener("mouseenter",()=>{
+    x.setAttribute("src","../static/plus.jpg")
+  })
+  x.addEventListener("mouseleave",()=>{
+    x.setAttribute("src","../static/manProfile.jpg")
+  })
+</script> -->
+
+<script>
+	const loadFile = function (event) {
+
+    let createA=document.createElement("a")
+    createA.setAttribute("id",'change')
+    // createA.setAttribute("href",`{% url 'AddProfileImage' %}`)
+    createA.addEventListener("click",()=>{
+      console.log("hello")
+    })
+    console.log(createA.getAttributeNames())
+    // let p=document.getElementById('changeProfile')
+    // p.setAttribute("href",`{% url 'AddProfileImage' %}`)
+    // console.log(p.getAttributeNames())
+
+  let image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
+	console.log(image.src);
+	let x=document.getElementById('imgUrl')
+	x.setAttribute("value",image.src)
+};
+</script>
 {% endblock %}

@@ -25,6 +25,7 @@ class User(models.Model):
     password = models.CharField(max_length=200)
     phone=models.BigIntegerField()
     address=models.CharField(max_length=200,default="")
+    profileimg=models.ImageField(upload_to='users',default="")
     
 
 class Feedback(models.Model):
@@ -57,7 +58,6 @@ class MyCart(models.Model):
     productid=models.CharField(max_length=200)
     quantity=models.CharField(max_length=200)
     totalprice=models.CharField(max_length=200)
-    # is_bought=models.BooleanField()
     orderId=models.CharField(max_length=200,default="0")
 
 class VendorRegister(models.Model):

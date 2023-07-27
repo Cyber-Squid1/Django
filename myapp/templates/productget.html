@@ -48,21 +48,21 @@
             <form action="{% url 'BuyProduct' %}" method="post">
                 {% csrf_token %}
                 <input type="text" value="{{SingleProductdata.productid}}" name="proid" hidden>
-                <input type="text" name="quantity" id="qu" hidden>
+                <input type="text" name="quantity1" id="qty1" hidden>
                 <button class="p-2 m-4" type="submit">Buy Now</button>
             </form>
-            <form action="{% url 'addtocart' SingleProductdata.productid %}" method="post">
+            <form action="{% url 'addtocart' %}" method="post">
                 {% csrf_token %}
-                <!-- <input type="hidden" value="{{SingleProductdata.productid}}" name="proid"> -->
-                <input type="text" name="quantity" id="qu1" hidden>
+                <input type="text" value="{{SingleProductdata.productid}}" name="proid" hidden>
+                <input type="text" name="quantity2" id="qty2" hidden>
                 <button class="p-2 m-4" type="submit">Add To cart <img src="{% static '/images/cart.svg' %}" alt="" height="17px" width="17px"></button>
             </form>
         </div>
     <script async>
         document.getElementById('qty').addEventListener("click",()=>{
             x=document.getElementById('qty').value[0]
-            document.getElementById('qu').setAttribute("value",x)
-            document.getElementById('qu1').setAttribute("value",x)
+            document.getElementById('qty1').setAttribute("value",x)
+            document.getElementById('qty2').setAttribute("value",x)
         })
     </script>
 </body>

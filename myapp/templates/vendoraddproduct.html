@@ -31,7 +31,7 @@ Author URL: http://w3layouts.com
   <body>
     <div class="flex-row" style="width: 50%; margin: auto; border: 1px solid black; box-shadow: 4px 4px; margin-top: 10px;">
       <div class="heading text-center" style="background-color: azure">
-        <h2 style="margin-bottom: 0px;">Add product</h2>
+        <h2 style="margin-bottom: 0px; padding: 10px;">Add product</h2>
       </div>
       <div
         class="main flex-row justify-content-start"
@@ -56,8 +56,8 @@ Author URL: http://w3layouts.com
               {% endcomment %}
               <select name="category" id="email">
                 {% for i in productCategoryList %}
-                <option value="{{i.categoryId}}" selected="selected">
-                  {{i.categoryName}}
+                <option value="{{i.pk}}" selected="selected">
+                  {{i.categoryname}}
                 </option>
                 {% endfor %}
               </select>

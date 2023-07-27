@@ -81,7 +81,6 @@ def product_all(request):
 
 def Home(request):
     if 'email' in request.session.keys():
-        # isLoggedIn=request.session['email']
         categorydata=Category.objects.all()
         return render(request,'Home.html',{"categorydata":categorydata,"isLoggedIn":1})
     else:
@@ -91,6 +90,7 @@ def Home(request):
 
 def CategoryWiseProduct(request,id):
     categoryWiseData=Products.objects.filter(productcategory=id)
+    print(categoryWiseData)
     return render(request,'CategoryWise.html',{"categoryWiseData":categoryWiseData})
 
 def SingleProduct(request,id):
@@ -133,10 +133,21 @@ def Profile(request):
             return redirect('Profile')
         userdata=User.objects.get(email=request.session['email'])
         nameList=str(userdata.name).split(" ")
+        # print(userdata.profileimg)
         return render(request,'profile.html',{"userdata":userdata,"isLoggedIn":1,"fname":nameList[0],"lname":nameList[1]})
 
 def AddProfileImage(request):
-    return redirect('Profile')
+    if 'email' in request.session:
+        print("run 1")
+        if request.method == "POST" and request.FILES:
+            print("run 2")
+            image=request.FILES['file']
+            print("run 3")
+            print("image is:",image)
+            print("run 4")
+        return redirect('Profile')
+    else:
+        return redirect('Login')
 # def EditProfile(request):
 #     userdata=User.objects.get(email=request.session['email'])
 #     if request.method=='POST':
@@ -182,8 +193,8 @@ def BuyNow(request):
     else:
         return redirect('Login')
 
-RAZOR_KEY_ID="rzp_test_9viBqTs2AhJfoy"
-RAZOR_KEY_SECRET="qnxki0MujgcumrjkSzeXfyew"
+RAZOR_KEY_ID="rzp_test_aCNBdqUcJ0rInA"
+RAZOR_KEY_SECRET="fAwSHBkS3eUoPrNRQRQzDfEC"
 razorpay_client=razorpay.Client(auth=(RAZOR_KEY_ID,RAZOR_KEY_SECRET))
 
 def razorpayView(request):
@@ -364,17 +375,19 @@ def ChangePassowrdUsingOTP(request):
     else:
         return render(request,'Forgotpassword.html',{"message":"OTP expired.Please generate a new OTP."})
     
-def AddToCart(request,id):
+def AddToCart(request):
     if 'email' in request.session:
         if request.method=="POST":
-            qty=request.POST['quantity']
-            print("Oty: ",qty)
-            productData=Products.objects.get(productid=int(id))
+            qty=request.POST['quantity2']
+            if qty=='':
+                qty=1
+            pid=request.POST['proid']
+            productData=Products.objects.get(productid=int(pid))
             try:
-                myCartData=MyCart.objects.get(productid=int(id))
+                myCartData=MyCart.objects.get(productid=int(pid))
                 newQuantity=int(myCartData.quantity)+int(qty)
                 newPrice=productData.price*newQuantity
-                MyCart.objects.filter(productid=int(id)).update(quantity=newQuantity,totalprice=newPrice)
+                MyCart.objects.filter(productid=int(pid)).update(quantity=newQuantity,totalprice=newPrice)
                 return redirect('ViewCart')
             except:
                 userData=User.objects.get(email=request.session['email'])
@@ -481,17 +494,32 @@ def VendorSignUp(request):
 
 def VendorAddProduct(request):
     if 'vendorEmail' in request.session:
+        productCategoryList=Category.objects.all()
         vendorData=VendorRegister.objects.get(email=request.session['vendorEmail'])
-        temp=Products.objects.filter(vendorid=vendorData.pk)
-        productCategoryList=[]
-        for i in temp:
-            categoryDict={}
-            categoryDict['categoryId']=i.productcategory.pk
-            categoryDict['categoryName']=i.productcategory.categoryname
-            if categoryDict in productCategoryList:
-                continue
-            else:
-                productCategoryList.append(categoryDict)
+        if request.method == "POST" and request.FILES:
+            categoryid=Category.objects.get(id=int(request.POST['category']))
+            name=request.POST['name']
+            price=request.POST['Price']
+            img=request.FILES['file']
+            qty=request.POST['Quantity']
+            desc=request.POST['Description']
+            # print("category",categoryid)
+            # print("name",name)
+            # print("price",price)
+            # print("img",img)
+            # print("qty",qty)
+            # print("desc",desc)
+            Products.objects.create(vendorid=vendorData.pk,productcategory=categoryid,productname=name,price=price,productimg=img,quantity=qty,productdescription=desc)
+        # productCategoryList=[]
+        # for i in temp:
+        #     categoryDict={}
+        #     categoryDict['categoryId']=i.productcategory.pk
+        #     categoryDict['categoryName']=i.productcategory.categoryname
+        #     if categoryDict in productCategoryList:
+        #         continue
+        #     else:
+        #         productCategoryList.append(categoryDict)
+        # return render(request,'vendoraddproduct.html',{"vendorLoggedIn":1,"productCategoryList":productCategoryList})
         return render(request,'vendoraddproduct.html',{"vendorLoggedIn":1,"productCategoryList":productCategoryList})
     else:
         return redirect('VendorLogin')
